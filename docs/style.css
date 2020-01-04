@@ -7,11 +7,21 @@ body, * {
 }
 
 .header {
-	width: 500px;
+	width: 600px;
 	margin: 0 auto;
 	text-align: center;
 	margin-top: 120px;
-	font-size: 90px;
+	font-size: 70px;
+}
+
+.header div:first-child {
+	color: #3C91E6;
+	margin-bottom: 30px;
+	font-family: 'Kaushan Script', cursive;
+}
+
+.header div:last-child {
+	font-family: 'Roboto Slab', serif;
 }
 
 .aside {
@@ -56,12 +66,9 @@ body, * {
 }
 
 .timer-value {
-	font-size: 80px;
-	/*color:#3C91E6;*/
-}
-
-.timer-title {
-	font-size: 40px;
+	font-size: 90px;
+	/*font-family: 'Bebas Neue', cursive;*/
+	padding: 30px;
 	/*color:#3C91E6;*/
 }
 
