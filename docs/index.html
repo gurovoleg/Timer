@@ -4,10 +4,18 @@
 	<meta charset="UTF-8">
 	<title>Timer</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	
+	<link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+	
 	<link rel="stylesheet" href="./style.css">
 </head>
 <body>
 	
+	<div class="header">
+		<div style="color: #3C91E6;margin-bottom: 50px;font-family: 'Lobster', cursive;">Онлайн</div>
+		<div style="">Секундомер</div>
+	</div>
+
 	<div id="aside" class="aside">
 		<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить все</button>
 		<div id="asideContent" class="aside-content"></div>
@@ -16,7 +24,6 @@
 	<div class="wrapper">
 		<div class="ui black segment" style="padding: 40px">
 			<div class="timer">
-				<!-- <div class="timer-title">Timer</div> -->
 				<div id="timer" class="timer-value">00:00:00</div>
 			</div>
 
