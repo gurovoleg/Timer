@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Timer</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+	
+	<div id="aside" class="aside">
+		<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить все</button>
+		<div id="asideContent" class="aside-content"></div>
+	</div>
+	
+	<div class="wrapper">
+		<div class="ui black segment" style="padding: 40px">
+			<div class="timer">
+				<!-- <div class="timer-title">Timer</div> -->
+				<div id="timer" class="timer-value">00:00:00</div>
+			</div>
+
+			<div class="controls">
+				<div class="ui icon buttons black">
+				  <button id="start" class="ui button"><i class="play icon"></i></button>
+				  <button id="stop" class="ui button"><i class="pause icon"></i></button>
+				  <button id="reset" class="ui button"><i class="stop icon"></i></button>
+				</div>
+			</div>
+
+			<form id="form">
+				<div class="ui action input" style="width:100%">
+				  <input id="formInput" type="text" placeholder="Сохранить результат...">
+				  <button id="submit" class="ui icon button disabled black">
+				    <i class="save icon"></i>
+				  </button>
+				</div>
+			</form>
+		</div>	
+
+	</div>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script> -->
+<script src="timer.js"></script>
+</html>
