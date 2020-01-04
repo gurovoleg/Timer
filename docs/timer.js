@@ -1,5 +1,6 @@
 // const
 const timerElement = document.getElementById('timer')
+const timerElements = document.querySelectorAll('.block-element')
 const form = document.getElementById('form')
 const input = document.getElementById('formInput')
 const aside = document.getElementById('aside')
@@ -41,12 +42,12 @@ function updateTimer (ms) {
 		timer.m = 0
 		timer.h ++
 	}
-	updateView()
+	renderTimer()
 }
 
 function clearTimer () {
 	timer = { h: 0, m: 0, s: 0 }
-	updateView()
+	renderTimer()
 }
 
 function stopTimer () {
@@ -55,9 +56,21 @@ function stopTimer () {
 	stopButton.classList.add(disabled)
 }
 
-// update DOM
-function updateView () {
-	timerElement.innerHTML = getTimerValue()
+// Render Timer
+function renderTimer () {
+	const timer = getTimerValue()
+	timerElements.forEach((el, idx) => {
+		el.innerHTML = timer[idx]
+	})
+
+}
+
+// Render Aside
+function renderAside () {
+	asideContent.innerHTML = ''
+	for(let key in storage) {
+		asideContent.insertAdjacentHTML('beforeEnd', createCardElement(storage[key].date, key, storage[key].time))
+	}
 }
 
 // help fucntions
@@ -69,23 +82,18 @@ function getTimerValue() {
 	const hh = formatValue(timer.h)
 	const mm = formatValue(timer.m)
 	const ss = formatValue(timer.s)
-	return `${hh}:${mm}:${ss}`
+	// return `${hh}:${mm}:${ss}`
+	return [ ...hh, ...mm, ...ss	]
 }
 
 function formatValue (value) {
 	return value > 9 ? value.toString() : `0${value}`
 }
 
-// Render Aside
-function renderAside () {
-	asideContent.innerHTML = ''
-	for(let key in storage) {
-		asideContent.insertAdjacentHTML('beforeEnd', createCardElement(storage[key].date, key, storage[key].time))
-	}
-}
 
 function createCardElement (date, title, value) {
 	title = !title || title === '' ? 'Нет названия' : title
+	value = `${value[0]}${value[1]}:${value[2]}${value[3]}:${value[4]}${value[5]}`
 	return `
 		<div class="ui steps d-flex">
 		  <div class="step">

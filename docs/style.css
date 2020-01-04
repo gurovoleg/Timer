@@ -66,10 +66,37 @@ body, * {
 }
 
 .timer-value {
-	font-size: 90px;
-	/*font-family: 'Bebas Neue', cursive;*/
-	padding: 30px;
+	/*font-size: 90px;*/
+	font-family: 'Bebas Neue', cursive;
+	padding: 20px 0;
 	/*color:#3C91E6;*/
+	display: flex;
+}
+
+.timer-value-block {
+	display: flex;
+}
+
+.block-element {
+	font-size: 70px;
+	/*background-color: rgba(27, 28, 29, 0.9);*/
+	background-color: #1b1c1d;
+	box-shadow: 0px 0px 1px 2px rgba(0,0,0, 1);
+	text-shadow: 2px 2px 1px black;
+	color: #fff;
+	line-height: 70px;
+	padding: 5px 10px;
+	border-radius: 8px;
+}
+
+.block-element:nth-child(odd) {
+	margin-right: 8px;	
+}
+
+.block-separator {
+	font-size: 70px;
+	line-height: 70px;
+	margin: 0 4px;
 }
 
 .controls {
@@ -131,5 +158,3 @@ body, * {
 	cursor: pointer;
 	font-size: 16px;
 }
-
-
