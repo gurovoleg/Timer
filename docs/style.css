@@ -6,22 +6,30 @@ body, * {
 	height: initial;
 }
 
-.header {
+.container {
 	width: 600px;
 	margin: 0 auto;
+}
+
+.header {
 	text-align: center;
-	margin-top: 120px;
+	padding: 50px 0;
 	font-size: 70px;
+	line-height: 70px;
 }
 
 .header div:first-child {
 	color: #3C91E6;
-	margin-bottom: 30px;
 	font-family: 'Kaushan Script', cursive;
 }
 
 .header div:last-child {
 	font-family: 'Roboto Slab', serif;
+	margin-top: -20px;
+}
+
+.main {
+	min-width: 320px;
 }
 
 .aside {
@@ -31,32 +39,31 @@ body, * {
 	overflow: hidden;
 	background: #1b1c1d	;
 	color: rgba(255, 255, 255, 0.9);
-	left: -350px;
-	min-width: 350px;
-	max-width:350px;
-	box-shadow: 2px 0px 5px 1px rgba(0, 0, 0, 0.2);
+	left: -300px;
+	min-width: 300px;
+	max-width:300px;
+	box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.9);
 	padding: 20px;
 	transition: left 0.4s ease;
-	/*transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.175);*/
 }
 
 .aside-content {
 	overflow: auto;
 	height: calc(100% - 60px);
-	width: 350px;
+	width: 300px;
 }
 
 .aside--show {
 	left: 0;
 }
 
-.wrapper {
+/*.wrapper {
 	position: absolute;
 	z-index: 3;
 	top: 50%; left: 50%;
 	transform: translate(-50%, -50%);
 	min-width: 300px;
-}
+}*/
 
 .timer {
 	display: flex;
@@ -77,12 +84,12 @@ body, * {
 
 .block-element {
 	font-size: 70px;
+	line-height: 70px;
 	/*background-color: rgba(27, 28, 29, 0.9);*/
 	background-color: #1b1c1d;
 	box-shadow: 0px 0px 1px 2px rgba(0,0,0, 1);
 	text-shadow: 2px 2px 1px black;
 	color: #fff;
-	line-height: 70px;
 	padding: 5px 10px;
 	border-radius: 8px;
 }
@@ -102,8 +109,9 @@ body, * {
 	padding: 20px 0px 40px 0px;
 }
 
-.wrapper .ui.black.segment {
+.main .ui.black.segment {
 	border-top: 5px solid #3C91E6!important;
+	padding: 40px
 }
 
 .ui.buttons {
@@ -111,9 +119,8 @@ body, * {
 }
 
 .ui.steps {
-	transition: all 1s;
 	position: relative;
-	width: 310px;
+	width: 260px;
 }
 
 .ui.steps.d-flex {
@@ -124,7 +131,6 @@ body, * {
 	justify-content: flex-start;
 	flex: 1 0 100%;
 	flex-wrap: nowrap;
-	/*border-top: 2px solid red!important;*/
 	border-left: 5px solid rgb(216, 39, 39);
 	/*border-top: 5px solid #3C91E6;*/
 }
@@ -143,8 +149,6 @@ body, * {
 	margin-bottom: 20px;
 	width: 100%;
 	height: 40px;
-	/*display: block;*/
-	/*margin: 0 auto;*/
 }
 
 .ui.steps .step .icon--absolute {
@@ -156,3 +160,67 @@ body, * {
 	cursor: pointer;
 	font-size: 16px;
 }
+
+@media (max-width: 991px) {
+  .block-element, .block-separator, .header {
+    font-size: 50px;
+    line-height: 50px;
+  }
+
+  .aside {
+  	position: relative;
+  	overflow: hidden;
+  	left: -1000px;
+  	min-width: 0px;
+  	max-width:100%;
+  	box-shadow: none;
+  	padding: 20px;
+  	transition: left 0.4s ease;
+  	border-radius: 0 0 4px 4px;
+  }
+
+  .aside--show { left: 0; }
+
+  .aside-content {
+  	overflow: auto;
+  	width: 100%;
+  }
+
+  .container { width: 400px; }
+  .header { padding: 30px; }
+  .header div:last-child { margin-top: -10px; }
+	.main .ui.black.segment { 
+		margin: 0; 
+		border-radius: 4px 4px 0 0;
+		padding: 0 20px 20px;
+	}
+
+	.controls { padding: 0 20px 20px;	}
+	form { padding: 0 20px;	}
+	.ui.steps { width: 100%;}
+	.ui.steps .step { border-left: none;}
+	
+	.ui.steps .step .icon--absolute {
+		right: 8px;
+		top: 8px;
+	}
+
+}
+
+@media (max-width: 767px) {
+	.ui.steps .step .stopwatch.icon {
+		position: absolute;
+		left: 20px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+@media (max-width: 575px) {
+	.block-element, .block-separator, .header {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+
