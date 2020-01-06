@@ -134,17 +134,15 @@ function formatValue (value) {
 function createCardElement (date, title, value) {
 	title = !title || title === '' ? 'Нет названия' : title
 	return `
-		<div class="ui steps d-flex">
-		  <div class="step">
-		  	<i class="close icon icon--absolute"></i>
-		    <i class="stopwatch icon"></i>
-		    <div class="content">
-					<div class="date">${date}</div>
-		      <div class="title">${value}</div>
-		      <div class="description">${title}</div>
-		    </div>
-		  </div>
-		</div>`
+		<div class="card">
+ 	  	<i class="close icon icon--absolute"></i>
+      <i class="stopwatch icon"></i>
+      <div class="card-content">
+			  <div class="date">${date}</div>
+        <div class="time">${value}</div>
+        <div class="description">${title}</div>
+      </div>
+    </div>`
 }
 
 function getStorage () {

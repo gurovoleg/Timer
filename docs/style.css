@@ -110,47 +110,55 @@ body, * {
 	width: 100%;
 }
 
-.ui.steps {
+.card {
 	position: relative;
-	width: 260px;
-}
-
-.ui.steps.d-flex {
 	display: flex;
-}
-
-.ui.steps .step {
-	justify-content: flex-start;
-	flex: 1 0 100%;
-	flex-wrap: nowrap;
+	width: 260px;
+	background-color: #fff;
+	border-radius: 4px;
+	padding: 15px 10px;
+	align-items: center;
+	margin-bottom: 10px;
 	border-left: 5px solid rgb(216, 39, 39);
-	width: 100%;
 }
 
-.ui.steps .date {
-	margin-bottom: 0.25em;
+.card .icon--absolute {
+	position: absolute;
+	right: 5px;
+	top: 10px;
+	color: #1b1c1d;
+	z-index: 2;
+	cursor: pointer;
+	font-size: 15px;
+}
+
+.card .stopwatch.icon {
+	color: #1b1c1d;
+	font-size: 40px;
+	line-height: 40px;
+	margin-right: 10px;
+}
+
+.card .time {
+	color: #3C91E6;
+	font-size: 1.2em;
+	margin-bottom: 2px;
+}
+
+.card .date {
 	font-weight: 900;
 	font-size: 0.92em;
 }
 
-.ui.steps .title {
-	color: #3C91E6;
+.card .description {
+	font-weight: 400;
+	line-height: 1.2;
 }
 
 .ui.button.button--delete {
 	margin-bottom: 20px;
 	width: 100%;
 	height: 40px;
-}
-
-.ui.steps .step .icon--absolute {
-	position: absolute;
-	right: 0px;
-	top: 8px;
-	color: #1b1c1d;
-	z-index: 2;
-	cursor: pointer;
-	font-size: 16px;
 }
 
 .ui.input.search {
@@ -203,8 +211,10 @@ body, * {
 
 	.controls { padding: 0 20px 20px;	}
 	form { padding: 0 20px;	}
-	.ui.steps { width: 100%;}
-	.ui.steps .step { border-left: none;}
+	.card { 
+		width: 100%;
+		border-left: none;
+	}
 }
 
 @media (max-width: 767px) {
