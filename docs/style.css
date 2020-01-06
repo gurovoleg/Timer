@@ -122,6 +122,10 @@ body, * {
 	border-left: 5px solid rgb(216, 39, 39);
 }
 
+.card-content {
+	width: 100%;
+}
+
 .card .icon--absolute {
 	position: absolute;
 	right: 5px;
