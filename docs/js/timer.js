@@ -117,6 +117,10 @@ function updateTimer (ms) {
 		timer.m = 0
 		timer.h ++
 	}
+	if (timer.h >= 99) {
+		timer.h = 0
+	}
+
 	renderTimer()
 }
 
