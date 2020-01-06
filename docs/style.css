@@ -36,20 +36,44 @@ body, * {
 	position: fixed;
 	top: 0;
 	bottom: 0;
-	overflow: hidden;
 	background: #1b1c1d	;
 	color: rba(255, 255, 255, 0.9);
 	left: -700px;
-	min-width: 300px;
+	width: 300px;
 	max-width:300px;
 	box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.9);
 	padding: 20px;
-	transition: left 0.4s ease;
+	transition: all 0.4s ease;
+}
+
+.aside--compact {
+	width: 80px;
+}
+
+.aside-wrapper {
+	height: 100%;
+	overflow: hidden;
+}
+
+.d-none {
+	display: none !important;
+}
+
+.aside-controls {
+	margin-bottom: 10px;
+	display: block;
+}
+
+.aside .angle.double.icon {
+	font-size: 30px;
+	line-height: 30px;
+	color:rgba(255, 255, 255, 0.2);
+	cursor: pointer;
 }
 
 .aside-content {
 	overflow: auto;
-	height: calc(100% - 60px - 48px);
+	height: calc(100% - 60px - 48px - 50px);
 	width: 300px;
 }
 
@@ -170,14 +194,14 @@ body, * {
 }
 
 .ui.button.button--delete {
-	margin-bottom: 20px;
+	margin-top: 20px;
 	width: 100%;
 	height: 40px;
 }
 
 .ui.input.search {
 	width: 100%;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 .ui.input.search input {
@@ -192,6 +216,14 @@ body, * {
 }
 
 @media (max-width: 991px) {
+  .aside-controls {
+  	display: none;
+  }
+
+  .aside-wrapper.d-none {
+		display: block !important;
+  }
+
   .block-element, .block-separator, .header {
     font-size: 50px;
     line-height: 50px;
@@ -201,9 +233,8 @@ body, * {
   	position: relative;
   	min-width: 0px;
   	max-width:100%;
+  	width: 100%;
   	box-shadow: none;
-  	padding: 20px;
-  	margin-bottom: 20px;
   	border-radius: 0 0 4px 4px;
   }
 
@@ -211,6 +242,10 @@ body, * {
 
   .aside-content {
   	overflow: auto;
+  	width: 100%;
+  }
+
+  .aside--hide {
   	width: 100%;
   }
 
@@ -229,6 +264,8 @@ body, * {
 		width: 100%;
 		border-left: none;
 	}
+	
+	.ui.button.button--delete { margin-top: 10px;	}
 }
 
 @media (max-width: 767px) {

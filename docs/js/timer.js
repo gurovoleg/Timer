@@ -6,10 +6,13 @@ const addInput = document.getElementById('formInput')
 const searchInput = document.getElementById('search')
 const aside = document.getElementById('aside')
 const asideContent = document.getElementById('asideContent')
+const asideWrapper = document.querySelector('.aside-wrapper')
 const startButton = document.getElementById('start')
 const stopButton = document.getElementById('stop')
 const resetButton = document.getElementById('reset')
 const submitButton = document.getElementById('submit')
+const minAside = document.getElementById('minAside')
+const maxAside = document.getElementById('maxAside')
 const clearStorageButton = document.getElementById('clearStorage')
 const disabled = 'disabled'
 const showAside = 'aside--show'
@@ -29,6 +32,7 @@ const state = {
 	},
 	aside: {
 		show: false,
+		compact: false,
 		tasks: {}
 	},
 	filter: {
@@ -45,7 +49,7 @@ if (!developmentMode) {
 
 async function init () {
 	state.aside.tasks = await getStorage()
-  aside.show = Object.keys(state.aside.tasks).length > 0
+  state.aside.show = Object.keys(state.aside.tasks).length > 0
 	render()
 }
 
@@ -64,16 +68,33 @@ function renderControls () {
 }
 
 // render Aside
-function renderAside () {
-	asideContent.innerHTML = ''
-	const data = Object.entries(state.aside.tasks).filter(([key, value]) => { 
-		return key.includes(state.filter.search) || value.date.includes(state.filter.search) 
-	})
-	for(let item of data) {
-		asideContent.append(createCardElement(item[1].date, item[0], item[1].time))
-		// asideContent.insertAdjacentHTML('beforeEnd', createCardElement(item[1].date, item[0], item[1].time))
+function renderAside (update = true) {
+	if (update) {
+		asideContent.innerHTML = ''
+		const data = Object.entries(state.aside.tasks).filter(([key, value]) => { 
+			return key.includes(state.filter.search) || value.date.includes(state.filter.search) 
+		})
+		for(let item of data) {
+			asideContent.append(createCardElement(item[1].date, item[0], item[1].time))
+		}
 	}
-	aside.show ? aside.classList.add(showAside) : aside.classList.remove(showAside)
+	
+	// show/hide Aside
+	state.aside.show ? aside.classList.add(showAside) : aside.classList.remove(showAside)
+
+	// set Aside compact 
+	if (state.aside.compact) {
+		aside.classList.add('aside--compact')
+		asideWrapper.classList.add('d-none')
+		maxAside.classList.remove('d-none')
+		minAside.classList.add('d-none')	
+	} else {
+		aside.classList.remove('aside--compact')
+		asideWrapper.classList.remove('d-none')
+		maxAside.classList.add('d-none')
+		minAside.classList.remove('d-none')	
+	}
+	
 }
 
 // render Timer
@@ -212,6 +233,16 @@ form.addEventListener('submit', function (e) {
 searchInput.addEventListener('input', function () {
 	state.filter.search = this.value
 	renderAside()
+})
+
+minAside.addEventListener('click', function () {
+	state.aside.compact = true
+	renderAside(false)
+})
+
+maxAside.addEventListener('click', function () {
+	state.aside.compact = false
+	renderAside(false)
 })
 
 document.addEventListener('DOMContentLoaded', function() {

@@ -59,17 +59,22 @@
 		</div>
 
 		<div id="aside" class="aside">
-			<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить все</button>
-			<div class="ui input search">
-			  <input id="search" type="text" placeholder="Найти...">
+			<div class='aside-controls'>
+				<i id="minAside" class="angle double left icon"></i>	
+				<i id="maxAside" class="angle double right icon d-none"></i>	
 			</div>
-			<div id="asideContent" class="aside-content"></div>
+			<div class="aside-wrapper">
+				<div class="ui input search">
+				  <input id="search" type="text" placeholder="Найти...">
+				</div>
+				<div id="asideContent" class="aside-content"></div>
+				<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить все</button>
+			</div>
 		</div>
 
 	</div>
 
 </body>
-<!-- <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script> -->
 <script>
 	const storageKey = 'timer'
 </script>
