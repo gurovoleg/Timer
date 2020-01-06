@@ -11,8 +11,7 @@ const startButton = document.getElementById('start')
 const stopButton = document.getElementById('stop')
 const resetButton = document.getElementById('reset')
 const submitButton = document.getElementById('submit')
-const minAside = document.getElementById('minAside')
-const maxAside = document.getElementById('maxAside')
+const compactAside = document.getElementById('compactAside')
 const clearStorageButton = document.getElementById('clearStorage')
 const disabled = 'disabled'
 const showAside = 'aside--show'
@@ -86,13 +85,11 @@ function renderAside (update = true) {
 	if (state.aside.compact) {
 		aside.classList.add('aside--compact')
 		asideWrapper.classList.add('d-none')
-		maxAside.classList.remove('d-none')
-		minAside.classList.add('d-none')	
+		compactAside.classList.add('icon--rotate')	
 	} else {
 		aside.classList.remove('aside--compact')
 		asideWrapper.classList.remove('d-none')
-		maxAside.classList.add('d-none')
-		minAside.classList.remove('d-none')	
+		compactAside.classList.remove('icon--rotate')	
 	}
 	
 }
@@ -235,13 +232,8 @@ searchInput.addEventListener('input', function () {
 	renderAside()
 })
 
-minAside.addEventListener('click', function () {
-	state.aside.compact = true
-	renderAside(false)
-})
-
-maxAside.addEventListener('click', function () {
-	state.aside.compact = false
+compactAside.addEventListener('click', function () {
+	state.aside.compact = !state.aside.compact
 	renderAside(false)
 })
 
