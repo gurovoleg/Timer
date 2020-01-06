@@ -70,7 +70,8 @@ function renderAside () {
 		return key.includes(state.filter.search) || value.date.includes(state.filter.search) 
 	})
 	for(let item of data) {
-		asideContent.insertAdjacentHTML('beforeEnd', createCardElement(item[1].date, item[0], item[1].time))
+		asideContent.append(createCardElement(item[1].date, item[0], item[1].time))
+		// asideContent.insertAdjacentHTML('beforeEnd', createCardElement(item[1].date, item[0], item[1].time))
 	}
 	aside.show ? aside.classList.add(showAside) : aside.classList.remove(showAside)
 }
@@ -133,16 +134,31 @@ function formatValue (value) {
 
 function createCardElement (date, title, value) {
 	title = !title || title === '' ? 'Нет названия' : title
-	return `
-		<div class="card">
- 	  	<i class="close icon icon--absolute"></i>
-      <i class="stopwatch icon"></i>
-      <div class="card-content">
-			  <div class="date">${date}</div>
-        <div class="time">${value}</div>
-        <div class="description">${title}</div>
-      </div>
+	
+	const card = document.createElement('div')
+	card.className = 'card'
+	
+	const icon = document.createElement('i')
+	icon.className = 'close icon icon--absolute'
+	icon.addEventListener('click', function () {
+		delete state.aside.tasks[title]
+		localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
+		init()
+	})
+	
+	card.append(icon)
+	
+	const rest = `
+		<i class="stopwatch icon"></i>
+    <div class="card-content">
+	  	<div class="date">${date}</div>
+    	<div class="time">${value}</div>
+    	<div class="description">${title}</div>
     </div>`
+  
+  card.insertAdjacentHTML('beforeEnd', rest)  
+  
+  return card
 }
 
 function getStorage () {
@@ -187,16 +203,6 @@ form.addEventListener('submit', function (e) {
 	}
 	localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
 	init()
-})
-
-// delete task from Aside
-aside.addEventListener('click', function (e) {
-	if (e.target.classList.contains('icon--absolute')) {
-		const key = e.target.parentNode.querySelector('.description').textContent
-		delete state.aside.tasks[key]
-		localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
-		init()
-	}
 })
 
 // filter
