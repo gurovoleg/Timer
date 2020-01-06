@@ -3,6 +3,7 @@ const timerElement = document.getElementById('timer')
 const timerElements = document.querySelectorAll('.block-element')
 const form = document.getElementById('form')
 const input = document.getElementById('formInput')
+const searchInput = document.getElementById('search')
 const aside = document.getElementById('aside')
 const asideContent = document.getElementById('asideContent')
 const startButton = document.getElementById('start')
@@ -14,18 +15,15 @@ const disabled = 'disabled'
 let timerId = null
 let timer = { h: 0,	m: 0,	s: 0 }
 let storage = {}
+let searchString = ''
 
 async function init () {
 	storage = await getStorage()
   renderAside()
   if (Object.keys(storage).length > 0) {
-		setTimeout(() => {
-			aside.classList.add('aside--show')
-		}, 500)
+		aside.classList.add('aside--show')
 	} else {
-		setTimeout(() => {
-			aside.classList.remove('aside--show')
-		}, 500)
+		aside.classList.remove('aside--show')
 	}
 }
 
@@ -58,7 +56,8 @@ function stopTimer () {
 
 // Render Timer
 function renderTimer () {
-	const timer = getTimerValue()
+	const timer = getTimerValue().replace(/:/g, '')
+	console.log(timer)
 	timerElements.forEach((el, idx) => {
 		el.innerHTML = timer[idx]
 	})
@@ -68,8 +67,9 @@ function renderTimer () {
 // Render Aside
 function renderAside () {
 	asideContent.innerHTML = ''
-	for(let key in storage) {
-		asideContent.insertAdjacentHTML('beforeEnd', createCardElement(storage[key].date, key, storage[key].time))
+	const data = Object.entries(storage).filter(([key, value]) => key.includes(searchString) || value.date.includes(searchString))
+	for(let item of data) {
+		asideContent.insertAdjacentHTML('beforeEnd', createCardElement(item[1].date, item[0], item[1].time))
 	}
 }
 
@@ -82,8 +82,7 @@ function getTimerValue() {
 	const hh = formatValue(timer.h)
 	const mm = formatValue(timer.m)
 	const ss = formatValue(timer.s)
-	// return `${hh}:${mm}:${ss}`
-	return [ ...hh, ...mm, ...ss	]
+	return `${hh}:${mm}:${ss}`
 }
 
 function formatValue (value) {
@@ -93,7 +92,6 @@ function formatValue (value) {
 
 function createCardElement (date, title, value) {
 	title = !title || title === '' ? 'Нет названия' : title
-	value = `${value[0]}${value[1]}:${value[2]}${value[3]}:${value[4]}${value[5]}`
 	return `
 		<div class="ui steps d-flex">
 		  <div class="step">
@@ -160,6 +158,12 @@ aside.addEventListener('click', function (e) {
 		init()
 	}
 
+})
+
+// фильтр
+searchInput.addEventListener('input', function () {
+	searchString = this.value
+	renderAside()
 })
 
 document.addEventListener('DOMContentLoaded', function() {

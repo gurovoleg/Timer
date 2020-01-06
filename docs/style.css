@@ -38,8 +38,8 @@ body, * {
 	bottom: 0;
 	overflow: hidden;
 	background: #1b1c1d	;
-	color: rgba(255, 255, 255, 0.9);
-	left: -300px;
+	color: rba(255, 255, 255, 0.9);
+	left: -700px;
 	min-width: 300px;
 	max-width:300px;
 	box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.9);
@@ -56,14 +56,6 @@ body, * {
 .aside--show {
 	left: 0;
 }
-
-/*.wrapper {
-	position: absolute;
-	z-index: 3;
-	top: 50%; left: 50%;
-	transform: translate(-50%, -50%);
-	min-width: 300px;
-}*/
 
 .timer {
 	display: flex;
@@ -161,6 +153,22 @@ body, * {
 	font-size: 16px;
 }
 
+.ui.input.search {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.ui.input.search input {
+	background-color: #000;
+	/*background-color: #1b1c1d;*/
+	color: #fff;
+}
+
+.ui.input>input:focus {
+	outline: none;
+	border: 1px solid #000;
+}
+
 @media (max-width: 991px) {
   .block-element, .block-separator, .header {
     font-size: 50px;
@@ -169,13 +177,11 @@ body, * {
 
   .aside {
   	position: relative;
-  	overflow: hidden;
-  	left: -1000px;
   	min-width: 0px;
   	max-width:100%;
   	box-shadow: none;
   	padding: 20px;
-  	transition: left 0.4s ease;
+  	margin-bottom: 20px;
   	border-radius: 0 0 4px 4px;
   }
 
@@ -199,12 +205,6 @@ body, * {
 	form { padding: 0 20px;	}
 	.ui.steps { width: 100%;}
 	.ui.steps .step { border-left: none;}
-	
-	.ui.steps .step .icon--absolute {
-		right: 8px;
-		top: 8px;
-	}
-
 }
 
 @media (max-width: 767px) {
@@ -213,6 +213,11 @@ body, * {
 		left: 20px;
 		top: 50%;
 		transform: translateY(-50%);
+	}
+
+	.ui.steps .step .icon--absolute {
+		right: 8px;
+		top: 8px;
 	}
 }
 
