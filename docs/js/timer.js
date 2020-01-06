@@ -141,9 +141,12 @@ function createCardElement (date, title, value) {
 	const icon = document.createElement('i')
 	icon.className = 'close icon icon--absolute'
 	icon.addEventListener('click', function () {
-		delete state.aside.tasks[title]
-		localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
-		init()
+		this.parentNode.classList.add('card--hide')
+		setTimeout(() => {
+			delete state.aside.tasks[title]
+			localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
+			init()	
+		}, 700)
 	})
 	
 	card.append(icon)
