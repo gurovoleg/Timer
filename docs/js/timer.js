@@ -81,7 +81,6 @@ function renderTimer () {
 	timerElements.forEach((el, idx) => {
 		el.innerHTML = timer[idx]
 	})
-
 }
 
 // data processing

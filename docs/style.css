@@ -124,7 +124,7 @@ body, * {
 	flex: 1 0 100%;
 	flex-wrap: nowrap;
 	border-left: 5px solid rgb(216, 39, 39);
-	/*border-top: 5px solid #3C91E6;*/
+	width: 100%;
 }
 
 .ui.steps .date {
