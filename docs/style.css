@@ -49,7 +49,7 @@ body, * {
 
 .aside-content {
 	overflow: auto;
-	height: calc(100% - 60px);
+	height: calc(100% - 60px - 48px);
 	width: 300px;
 }
 
