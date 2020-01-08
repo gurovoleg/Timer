@@ -69,7 +69,11 @@ body, * {
 	line-height: 30px;
 	color:rgba(255, 255, 255, 0.2);
 	cursor: pointer;
-	transition: transform 0.5s;
+	transition: all 0.5s;
+}
+
+.aside .angle.double.icon:hover {
+	color: #fff;
 }
 
 .icon--rotate {
