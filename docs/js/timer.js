@@ -27,7 +27,6 @@ const state = {
 	controls: {
 		start: true,
 		stop: false,
-		submit: false,
 	},
 	aside: {
 		show: false,
@@ -36,7 +35,8 @@ const state = {
 	},
 	filter: {
 		search: ''
-	}
+	},
+	taskName: ''
 }
 
 // test mode
@@ -60,8 +60,9 @@ function render () {
 
 // render Timer controls
 function renderControls () {
-	const { submit, start, stop } = state.controls
-	submit ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
+	const { taskName, start, stop } = state.controls
+	addInput.value = state.taskName
+	state.taskName ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
 	start ? startButton.classList.remove(disabled) : startButton.classList.add(disabled)
 	stop ? stopButton.classList.remove(disabled) : stopButton.classList.add(disabled)
 }
@@ -102,6 +103,20 @@ function renderTimer () {
 	})
 }
 
+function getTimerValue() {
+	const { timer } = state
+
+	const hh = formatValue(timer.h)
+	const mm = formatValue(timer.m)
+	const ss = formatValue(timer.s)
+
+	return `${hh}:${mm}:${ss}`
+}
+
+function formatValue (value) {
+	return value > 9 ? value.toString() : `0${value}`
+}
+
 // data processing
 function updateTimer (ms) {
 	const { timer } = state
@@ -129,6 +144,7 @@ function startTimer (ms = 1000) {
 }
 
 function stopTimer () {
+	console.log('stop Timer')
 	clearInterval(state.timer.id)
 	state.controls.start = true
 	state.controls.stop = false
@@ -139,20 +155,6 @@ function resetTimer () {
 	state.timer = { h: 0, m: 0, s: 0 }
 	renderTimer()
 }
-
-function getTimerValue() {
-	const { timer } = state
-
-	const hh = formatValue(timer.h)
-	const mm = formatValue(timer.m)
-	const ss = formatValue(timer.s)
-	return `${hh}:${mm}:${ss}`
-}
-
-function formatValue (value) {
-	return value > 9 ? value.toString() : `0${value}`
-}
-
 
 function createCardElement (date, title, value) {
 	title = !title || title === '' ? 'Нет названия' : title
@@ -174,12 +176,31 @@ function createCardElement (date, title, value) {
 	card.append(icon)
 	
 	const rest = `
-		<i class="stopwatch icon"></i>
+		<i class="stopwatch icon bounce"></i>
+    <i class="play icon"></i>
     <div class="card-content">
 	  	<div class="date">${date}</div>
     	<div class="time">${value}</div>
     	<div class="description">${title}</div>
     </div>`
+
+  // запуск продолжения старого задания
+  card.addEventListener('click', function () {
+  	const timer = value.split(':').map(str => Number(str))
+  	state.timer = {
+  		...state.timer,
+  		h: timer[0],
+  		m: timer[1],
+  		s: timer[2],
+  	}
+  	state.taskName = title
+  	stopTimer()
+  	renderTimer()
+  	document.querySelector('.main').classList.add('flipInX')
+  	setTimeout(() => {
+  		document.querySelector('.main').classList.remove('flipInX')
+  	}, 700)
+  })  
   
   card.insertAdjacentHTML('beforeEnd', rest)  
   
@@ -215,7 +236,7 @@ clearStorageButton.addEventListener('click', function () {
 })
 
 addInput.addEventListener('input', function () {
-	state.controls.submit = this.value !== ''
+	state.taskName = this.value 
 	renderControls()
 })
 

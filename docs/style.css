@@ -149,11 +149,29 @@ body, * {
 	align-items: center;
 	margin-bottom: 10px;
 	border-left: 5px solid rgb(216, 39, 39);
-	transition: all 0.4s ease;
 	left: 0;
 	transition-property: transform, left;
 	transition-duration: 0.2s, 0.4s;
 	transition-delay: 0s, 0.2s;
+	cursor: pointer;
+}
+
+.card:hover {
+  /*border-left: 5px solid #3C91E6;*/
+}
+
+.card:hover .play.icon {
+  opacity: 100%;
+  transform: scale(1);
+}
+
+.card:hover .stopwatch.icon {
+	/*opacity: 0%;*/
+	transform: scale(0);
+/*  animation-name: bounce;
+  transform-origin: center bottom;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;*/
 }
 
 .card--hide {
@@ -180,6 +198,17 @@ body, * {
 	font-size: 40px;
 	line-height: 40px;
 	margin-right: 10px;
+	transition: all 0.4s ease;
+}
+
+.card .play.icon {
+	position: absolute;
+	left: 15px;
+	transform: scale(0);
+	color: #1b1c1d;
+	font-size: 32px;
+	line-height: 32px;
+	transition: all 0.4s ease;
 }
 
 .card .time {
@@ -293,5 +322,3 @@ body, * {
     line-height: 40px;
   }
 }
-
-
