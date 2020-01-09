@@ -164,7 +164,8 @@ function createCardElement (date, title, value) {
 	
 	const icon = document.createElement('i')
 	icon.className = 'close icon icon--absolute'
-	icon.addEventListener('click', function () {
+	icon.addEventListener('click', function (e) {
+		e.stopPropagation()
 		this.parentNode.classList.add('card--hide')
 		setTimeout(() => {
 			delete state.aside.tasks[title]
