@@ -62,7 +62,7 @@ function render () {
 function renderControls () {
 	const { taskName, start, stop } = state.controls
 	addInput.value = state.taskName
-	state.taskName ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
+	state.taskName.trim() ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
 	start ? startButton.classList.remove(disabled) : startButton.classList.add(disabled)
 	stop ? stopButton.classList.remove(disabled) : stopButton.classList.add(disabled)
 }
@@ -144,7 +144,6 @@ function startTimer (ms = 1000) {
 }
 
 function stopTimer () {
-	console.log('stop Timer')
 	clearInterval(state.timer.id)
 	state.controls.start = true
 	state.controls.stop = false
@@ -238,18 +237,18 @@ clearStorageButton.addEventListener('click', function () {
 
 addInput.addEventListener('input', function () {
 	state.taskName = this.value 
-	renderControls()
+	renderControls()	
 })
 
 // add task to Aside
 form.addEventListener('submit', function (e) {
 	e.preventDefault()
-	state.aside.tasks[addInput.value] = {
+	state.aside.tasks[addInput.value.trim()] = {
 		time: getTimerValue(),
 		date: new Date().toLocaleString("ru")
 	}
 	localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
-	init()
+	init()	
 })
 
 // filter
