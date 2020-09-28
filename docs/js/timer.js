@@ -17,6 +17,8 @@ const disabled = 'disabled'
 const showAside = 'aside--show'
 const developmentMode = true
 
+
+
 const state = {
 	timer: { 
 		h: 0,	
@@ -48,8 +50,15 @@ if (!developmentMode) {
 
 async function init () {
 	state.aside.tasks = await getStorage()
+	fixStorage()
   state.aside.show = Object.keys(state.aside.tasks).length > 0
 	render()
+}
+
+// Удалить пустые ключи
+function fixStorage () {
+	delete state.aside.tasks['']
+	localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
 }
 
 // render global
@@ -62,7 +71,8 @@ function render () {
 function renderControls () {
 	const { taskName, start, stop } = state.controls
 	addInput.value = state.taskName
-	state.taskName.trim() ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
+	// state.taskName.trim() ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
+	submitButton.classList.remove(disabled)
 	start ? startButton.classList.remove(disabled) : startButton.classList.add(disabled)
 	stop ? stopButton.classList.remove(disabled) : stopButton.classList.add(disabled)
 }
@@ -156,7 +166,7 @@ function resetTimer () {
 }
 
 function createCardElement (date, title, value) {
-	title = !title || title === '' ? 'Нет названия' : title
+	title = title || 'Нет названия'
 	
 	const card = document.createElement('div')
 	card.className = 'card'
@@ -180,7 +190,10 @@ function createCardElement (date, title, value) {
     <i class="play icon"></i>
     <div class="card-content">
 	  	<div class="date">${date}</div>
-    	<div class="time">${value}</div>
+    	<div id="cardTime" class="time" title="Редактировать">
+    		<span contenteditable="true">${value}</span>
+    		<i class="pencil alternate icon"></i>
+    	</div>
     	<div class="description">${title}</div>
     </div>`
 
@@ -202,8 +215,25 @@ function createCardElement (date, title, value) {
   	}, 700)
   })  
   
-  card.insertAdjacentHTML('beforeEnd', rest)  
-  
+  card.insertAdjacentHTML('beforeEnd', rest)
+
+	// Добавляем обработчик для редактирования времени
+	const timeBlock = card.querySelector('#cardTime')
+
+  timeBlock.addEventListener('click', function (e) {
+  	e.stopPropagation()
+  	const timeElement = this.firstElementChild
+  	timeElement.focus()
+  	timeElement.addEventListener('blur', function (e) {
+  		state.aside.tasks[title].time = this.textContent
+  		localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
+  		init()	
+  	})
+  	timeElement.addEventListener('input', function (e) {
+  		this.textContent = e.target.textContent.replace(/[^\d:]/g, '')
+  	})
+  })
+
   return card
 }
 
