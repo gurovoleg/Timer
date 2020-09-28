@@ -71,8 +71,7 @@ function render () {
 function renderControls () {
 	const { taskName, start, stop } = state.controls
 	addInput.value = state.taskName
-	// state.taskName.trim() ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
-	submitButton.classList.remove(disabled)
+	state.taskName.trim() ? submitButton.classList.remove(disabled) : submitButton.classList.add(disabled)
 	start ? startButton.classList.remove(disabled) : startButton.classList.add(disabled)
 	stop ? stopButton.classList.remove(disabled) : stopButton.classList.add(disabled)
 }
