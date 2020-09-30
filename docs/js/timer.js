@@ -221,6 +221,8 @@ function createCardElement (date, title, value) {
 
   timeBlock.addEventListener('click', function (e) {
   	e.stopPropagation()
+  	timeBlock.style.color = 'blue'
+  	timeBlock.insertAdjacentHTML('beforeend', '<span>...</span>')
   	const timeElement = this.firstElementChild
   	timeElement.focus()
   	timeElement.addEventListener('blur', function (e) {

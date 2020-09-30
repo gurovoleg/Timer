@@ -216,6 +216,7 @@ body, * {
 }
 
 .card .time {
+	display: inline-block;
 	color: #3C91E6;
 	font-size: 1.2em;
 	margin-bottom: 2px;
