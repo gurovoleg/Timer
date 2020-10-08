@@ -38,7 +38,9 @@ const state = {
 	filter: {
 		search: ''
 	},
-	taskName: ''
+	taskName: '',
+	keyCode: undefined,
+	editedvalue: ''
 }
 
 // test mode
@@ -221,21 +223,45 @@ function createCardElement (date, title, value) {
 
   timeBlock.addEventListener('click', function (e) {
   	e.stopPropagation()
-  	timeBlock.style.color = 'blue'
-  	timeBlock.insertAdjacentHTML('beforeend', '<span>...</span>')
+
+  	state.editedvalue = value // добавляем в state текущее значение таймера задачи
+
+  	this.style.color = 'blue'
+  	// добавляем многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
+  	if (this.children.length === 2) {
+  		this.insertAdjacentHTML('beforeend', '<span>...</span>')	
+  	}
   	const timeElement = this.firstElementChild
   	timeElement.focus()
-  	timeElement.addEventListener('blur', function (e) {
-  		state.aside.tasks[title].time = this.textContent
-  		localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
-  		init()	
-  	})
-  	timeElement.addEventListener('input', function (e) {
-  		this.textContent = e.target.textContent.replace(/[^\d:]/g, '')
-  	})
+  	timeElement.addEventListener('blur', () => blurHandler(timeElement, title))
+  	timeElement.addEventListener('input', e => updateTimerHandler(e.target.textContent, timeElement) )
+  	timeElement.addEventListener('keydown', e => state.keyCode = e.keyCode)
   })
 
   return card
+}
+
+// обработчик blur после редактирования таймера
+function blurHandler (element, title) {
+	const values = element.textContent.split(':')
+	values[1] = values[1].length === 1 ? `0${values[1]}` : values[1]
+	values[2] = values[2].length === 1 ? `0${values[2]}` : values[2]
+	element.textContent = values.join(':')
+	state.aside.tasks[title].time = element.textContent
+	localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
+	init()	
+}
+
+// обработчик вводимых данных
+function updateTimerHandler (value, element) {
+	const values = value.replace(/[^\d:]/g, '').split(':')
+	if (values.length !== 3 || values[0].length > 2 || values[1].length > 2 || values[2].length > 2 || values[1] > 59 || values[2] > 59) {
+		element.textContent = state.editedvalue
+	} else {
+		element.textContent = values.join(':')	
+		 // Обновляем в state значение таймера задачи
+		state.editedvalue = element.textContent
+	}
 }
 
 function getStorage () {
