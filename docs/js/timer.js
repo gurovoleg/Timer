@@ -39,7 +39,6 @@ const state = {
 		search: ''
 	},
 	taskName: '',
-	keyCode: undefined,
 	editedvalue: ''
 }
 
@@ -234,7 +233,6 @@ function createCardElement (date, title, value) {
   	timeElement.focus()
   	timeElement.addEventListener('blur', () => blurHandler(timeElement, title))
   	timeElement.addEventListener('input', e => updateTimerHandler(e.target.textContent, timeElement) )
-  	timeElement.addEventListener('keydown', e => state.keyCode = e.keyCode)
   })
 
   return card
