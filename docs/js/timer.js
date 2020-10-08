@@ -225,8 +225,7 @@ function createCardElement (date, title, value) {
   	e.stopPropagation()
 
   	state.editedvalue = value // добавляем в state текущее значение таймера задачи
-
-  	this.style.color = 'blue'
+  	this.style.color = 'blue' // меняем цвет текста
   	// добавляем многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
   	if (this.children.length === 2) {
   		this.insertAdjacentHTML('beforeend', '<span>...</span>')	
@@ -248,6 +247,7 @@ function blurHandler (element, title) {
 	values[2] = values[2].length === 1 ? `0${values[2]}` : values[2]
 	element.textContent = values.join(':')
 	state.aside.tasks[title].time = element.textContent
+	state.aside.tasks[title].date = new Date().toLocaleString("ru")
 	localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
 	init()	
 }
