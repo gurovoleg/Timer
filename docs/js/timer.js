@@ -242,11 +242,13 @@ function createCardElement (date, title, value) {
 
 // обработчик blur после редактирования таймера
 function blurHandler (element, title) {
-	const values = element.textContent.split(':')
-	values[1] = values[1].length === 1 ? `0${values[1]}` : values[1]
-	values[2] = values[2].length === 1 ? `0${values[2]}` : values[2]
-	element.textContent = values.join(':')
-	state.aside.tasks[title].time = element.textContent
+	let values = element.textContent.split(':')
+	const formatValue = (value) => value.length === 0 ? '00' : value.length === 1 ? `0${value}` : value
+
+	newValue = values.map(value => formatValue(value)).join(':')
+	
+	element.textContent = newValue
+	state.aside.tasks[title].time = newValue
 	state.aside.tasks[title].date = new Date().toLocaleString("ru")
 	localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks))
 	init()	
@@ -255,7 +257,7 @@ function blurHandler (element, title) {
 // обработчик вводимых данных
 function updateTimerHandler (value, element) {
 	const values = value.replace(/[^\d:]/g, '').split(':')
-	if (values.length !== 3 || values[0].length > 2 || values[1].length > 2 || values[2].length > 2 || values[1] > 59 || values[2] > 59) {
+	if (values.length !== 3 || values.filter((value, idx) => (value.length > 2) || (idx !== 0 && value > 59)).length) {
 		element.textContent = state.editedvalue
 	} else {
 		element.textContent = values.join(':')	
