@@ -39,7 +39,9 @@ const state = {
 		search: ''
 	},
 	taskName: '',
-	editedvalue: ''
+	editedvalue: '',
+	carriagePosition: 0,
+	keyCode: undefined
 }
 
 // test mode
@@ -191,7 +193,7 @@ function createCardElement (date, title, value) {
     <div class="card-content">
 	  	<div class="date">${date}</div>
     	<div id="cardTime" class="time" title="Редактировать">
-    		<span contenteditable="true">${value}</span>
+    		<span id="editableTimer" contenteditable="true">${value}</span>
     		<i class="pencil alternate icon"></i>
     	</div>
     	<div class="description">${title}</div>
@@ -223,9 +225,9 @@ function createCardElement (date, title, value) {
   timeBlock.addEventListener('click', function (e) {
   	e.stopPropagation()
 
-  	state.editedvalue = value // добавляем в state текущее значение таймера задачи
+  	state.editedvalue = value // добавляем в state текущее значение таймера задачи, чтобы возвращать старое значение в случае неверного ввода
   	this.style.color = 'blue' // меняем цвет текста
-  	// добавляем многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
+  	// добавляем для режима редактирования многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
   	if (this.children.length === 2) {
   		this.insertAdjacentHTML('beforeend', '<span>...</span>')	
   	}
@@ -233,6 +235,7 @@ function createCardElement (date, title, value) {
   	timeElement.focus()
   	timeElement.addEventListener('blur', () => blurHandler(timeElement, title))
   	timeElement.addEventListener('input', e => updateTimerHandler(e.target.textContent, timeElement) )
+  	timeElement.addEventListener('keydown', e => state.keyCode = e.keyCode)
   })
 
   return card
@@ -244,7 +247,7 @@ function blurHandler (element, title) {
 	const formatValue = (value) => value.length === 0 ? '00' : value.length === 1 ? `0${value}` : value
 
 	newValue = values.map(value => formatValue(value)).join(':')
-	
+
 	element.textContent = newValue
 	state.aside.tasks[title].time = newValue
 	state.aside.tasks[title].date = new Date().toLocaleString("ru")
@@ -254,14 +257,43 @@ function blurHandler (element, title) {
 
 // обработчик вводимых данных
 function updateTimerHandler (value, element) {
+	const currentValue = state.editedvalue
+	const selection = window.getSelection();
+	state.carriagePosition = selection.focusOffset; // задаем текущее положение каретки
 	const values = value.replace(/[^\d:]/g, '').split(':')
+	
 	if (values.length !== 3 || values.filter((value, idx) => (value.length > 2) || (idx !== 0 && value > 59)).length) {
 		element.textContent = state.editedvalue
 	} else {
 		element.textContent = values.join(':')	
-		 // Обновляем в state значение таймера задачи
-		state.editedvalue = element.textContent
+		state.editedvalue = element.textContent // Обновляем в state значение таймера задачи
 	}
+	setCarriagePosition(currentValue, state.editedvalue, element.childNodes[0])
+}
+
+// Задаем расположение каретки
+function setCarriagePosition (value, nextValue, element) {
+  // Если значение поля в итоге не поменялось, но что-то нажато было, смещаем каретку согласно правилам:
+  // backspace и пробел - без изменений, delete - вперёд, всё остальное - возвращаем каретку на 1 назад
+  if (value === nextValue) {
+  	switch (state.keyCode) {
+  	  case 46: // delete
+  	    state.carriagePosition ++
+  	    break
+  	  case 8:   // backspace
+  	  case 32:  // пробел
+  	    break
+  	  default:
+  	    state.carriagePosition --
+  	}
+  }
+
+  const selection = window.getSelection();
+  const range = document.createRange()
+  range.setStart(element, state.carriagePosition);
+	range.collapse(true);
+	selection.removeAllRanges();
+	selection.addRange(range);
 }
 
 function getStorage () {
