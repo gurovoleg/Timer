@@ -109,7 +109,9 @@ function renderAside (update = true) {
 
 // render Timer
 function renderTimer () {
-	const timer = getTimerValue().replace(/:/g, '')
+	let timer = getTimerValue()
+	document.title = timer
+	timer = timer.replace(/:/g, '')
 	timerElements.forEach((el, idx) => {
 		el.innerHTML = timer[idx]
 	})
