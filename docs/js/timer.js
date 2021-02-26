@@ -17,14 +17,14 @@ const disabled = 'disabled'
 const showAside = 'aside--show'
 const developmentMode = true
 
-
-
 const state = {
 	timer: { 
 		h: 0,	
 		m: 0,	
 		s: 0, 
-		id: null 
+		id: null,
+		add: 0, // сохранненый промежуток времени в мс
+		start: 0  // стартовое время счетчика (используем для подсчета интервела: текущее значение - стартовое)
 	},
 	controls: {
 		start: true,
@@ -133,27 +133,38 @@ function formatValue (value) {
 
 // data processing
 function updateTimer (ms) {
+	/*
+	  Замер временного промежутка делаем с привязкой к текущему значению времени, т.е. высчитываем разницу
+	  между текущим моментом времени и начальным, когда таймер был запущен. До этого альтернативаный 
+	  вариант - обновление таймера по счетчику (+ 1000мс) - получалась задержка таймера и некорректный результат
+	*/
 	const { timer } = state
-	const newValue = timer.s + ms / 1000
-	
-	if (newValue >= 60) {
-		timer.s = 0
-		timer.m ++
-	} else {
-		timer.s += ms / 1000
-	}
-	if (timer.m >= 60) {
-		timer.m = 0
-		timer.h ++
-	}
-	if (timer.h >= 99) {
-		timer.h = 0
-	}
+	const current = Date.now()
+	const diff = current - timer.start // получаем разницу между текущим моментом временем и стартовым, когда был запущен таймер
+	const value = timer.add + diff // добавляем начальное значение таймера, если оно было задано, т.е. продолжаем работу с какого-то момента времени
+
+	const time = convertToTimeFormat(value)
+	Object.assign(timer, time)
 
 	renderTimer()
 }
 
+function convertToMilliseconds (timer = state.timer) {
+	return timer.h * 3600000 + timer.m * 60000 + timer.s * 1000
+}
+
+function convertToTimeFormat (ms, formatter) {
+	return {
+		s: formatter ? formatter(Math.floor((ms / 1000) % 60)) : Math.floor((ms / 1000) % 60),
+		m: formatter ? formatter(Math.floor((ms / 60000) % 60)) : Math.floor((ms / 60000) % 60),
+		h: formatter ? formatter(Math.floor((ms / 3600000) % 60)) : Math.floor((ms / 3600000) % 24),
+	}
+}
+
 function startTimer (ms = 1000) {
+	state.timer.start = Date.now()
+	state.timer.add = convertToMilliseconds()	
+	console.log(state.timer)
 	return setInterval(() => updateTimer(ms), ms)
 }
 
@@ -308,6 +319,7 @@ function getStorage () {
 // eventListeners
 startButton.addEventListener('click', function () {
 	state.timer.id = startTimer()
+	console.log(state.timer)
 	state.controls.start = false
 	state.controls.stop = true
 	renderControls()
