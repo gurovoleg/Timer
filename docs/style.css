@@ -263,6 +263,14 @@ body, * {
 	border: 1px solid #000;
 }
 
+.input-error {
+	color: #9f3a38;
+	font-weight: 700;
+	font-size: 14px;
+	margin-top: 4px;
+	position: absolute;
+}
+
 @media (max-width: 991px) {
   .aside-controls {
   	display: none;

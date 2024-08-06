@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no" />
 	<title>Timer</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-	
+
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
-	<link href="fonts/calibri.css" rel="stylesheet" >
-	
+	<link href="fonts/calibri.css" rel="stylesheet">
+
 	<link rel="stylesheet" href="./animation.css">
 	<link rel="stylesheet" href="./style.css">
-	
+
+	<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
+	<!-- <link rel="icon" href="./assets/favicon.png"> -->
 </head>
+
 <body>
-	
+
 	<div class="container">
 		<div class="header">
 			<div>Online</div>
 			<div>Секундомер</div>
 		</div>
-		
+
 		<div class="main">
 			<div class="ui black segment">
-				
+
 				<div class="timer">
 					<div class="timer-value">
 						<div class="timer-value-block">
@@ -46,34 +51,36 @@
 
 				<div class="controls">
 					<div class="ui icon buttons black">
-					  <button id="start" class="ui button"><i class="play icon"></i></button>
-					  <button id="stop" class="ui button"><i class="pause icon"></i></button>
-					  <button id="reset" class="ui button"><i class="stop icon"></i></button>
+						<button id="start" class="ui button"><i class="play icon"></i></button>
+						<button id="stop" class="ui button"><i class="pause icon"></i></button>
+						<button id="reset" class="ui button"><i class="stop icon"></i></button>
 					</div>
 				</div>
 
 				<form id="form">
 					<div class="ui action input" style="width:100%">
-					  <input id="formInput" type="text" placeholder="Сохранить результат...">
-					  <button id="submit" class="ui icon button disabled black">
-					    <i class="save icon"></i> &nbsp;&nbsp;Сохранить
-					  </button>
+						<input id="formInput" type="text" placeholder="Сохранить результат...">
+						<button id="submit" class="ui icon button disabled black">
+							<i class="save icon"></i> &nbsp;&nbsp;Сохранить
+						</button>
 					</div>
+					<div id="input-error" class="input-error"></div>
 				</form>
 
-			</div>	
+			</div>
 		</div>
 
 		<div id="aside" class="aside">
 			<div class='aside-controls'>
-				<i id="compactAside" class="angle double left icon"></i>	
+				<i id="compactAside" class="angle double left icon"></i>
 			</div>
 			<div class="aside-wrapper">
 				<div class="ui input search">
-				  <input id="search" type="text" placeholder="Найти...">
+					<input id="search" type="text" placeholder="Найти...">
 				</div>
 				<div id="asideContent" class="aside-content"></div>
-				<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить все</button>
+				<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить
+					все</button>
 			</div>
 		</div>
 
@@ -81,7 +88,9 @@
 	<script>
 		const storageKey = 'timer'
 	</script>
+	<script src="js/Sortable.min.js"></script>
 	<script src="js/mock.js"></script>
 	<script src="js/timer.js"></script>
 </body>
+
 </html>
