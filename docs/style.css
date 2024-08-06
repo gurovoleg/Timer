@@ -37,11 +37,12 @@ body, * {
 	top: 0;
 	bottom: 0;
 	background: #1b1c1d	;
-	color: rba(255, 255, 255, 0.9);
+	/* background: #fff; */
 	left: -700px;
 	width: 400px;
 	max-width:400px;
-	box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.9);
+	/* box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.9); */
+	/* box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); */
 	padding: 20px;
 	transition: all 0.4s ease;
 }
@@ -83,7 +84,7 @@ body, * {
 .aside-content {
 	overflow: auto;
 	height: calc(100% - 60px - 48px - 50px);
-	/* width: 300px; */
+	width: 380px;
 }
 
 .aside--show {
@@ -146,23 +147,22 @@ body, * {
 .card {
 	position: relative;
 	display: flex;
-	/* width: 260px; */
+	width: 360px;
 	background-color: #fff;
 	border-radius: 4px;
 	padding: 15px 10px;
 	align-items: center;
 	margin-bottom: 10px;
+	/* border: 2px solid rgba(34,36,38,.15); */
 	border-left: 5px solid rgb(216, 39, 39);
 	left: 0;
 	transition-property: transform, left;
 	transition-duration: 0.2s, 0.4s;
 	transition-delay: 0s, 0.2s;
 	cursor: pointer;
+	/* box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2); */
 }
 
-.card:hover {
-  /*border-left: 5px solid #3C91E6;*/
-}
 
 .card:hover .play.icon {
   opacity: 100%;
@@ -170,12 +170,7 @@ body, * {
 }
 
 .card:hover .stopwatch.icon {
-	/*opacity: 0%;*/
 	transform: scale(0);
-/*  animation-name: bounce;
-  transform-origin: center bottom;
-	animation-duration: 1s;
-	animation-iteration-count: infinite;*/
 }
 
 .card--hide {
@@ -187,7 +182,7 @@ body, * {
 	width: 100%;
 }
 
-.card .icon--absolute {
+.icon--absolute {
 	position: absolute;
 	right: 5px;
 	top: 10px;
@@ -239,6 +234,7 @@ body, * {
 .card .description {
 	font-weight: 400;
 	line-height: 1.2;
+	padding: 4px 0;
 }
 
 .ui.button.button--delete {
@@ -269,6 +265,53 @@ body, * {
 	font-size: 14px;
 	margin-top: 4px;
 	position: absolute;
+}
+
+.modal-wrapper {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+.modal-body {
+	background: #fff;
+	border-radius: 4px;
+	padding: 30px 30px;
+	width: 500px;
+	font-size: 16px;
+	position: relative;
+}
+
+.modal-title {
+	font-size: 18px;
+	font-weight: 700;
+}
+
+.modal-content {
+	padding: 10px 0;
+}
+
+.modal-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 10px
+}
+
+.modal-checkbox > div {
+	line-height: 1;
+	margin-top: 2px
+}
+
+.modal-content ul {
+	padding: 5px 0;
+	margin-left: 20px;
 }
 
 @media (max-width: 991px) {
@@ -339,8 +382,14 @@ body, * {
 }
 
 @media (max-width: 575px) {
-	.block-element, .block-separator, .header {
+  .block-element, .block-separator, .header {
     font-size: 40px;
     line-height: 40px;
   }
+
+  .modal-body {
+  	width: 300px;
+  }
 }
+
+

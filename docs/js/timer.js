@@ -1,4 +1,7 @@
-// const
+const version = "2.0";
+const infoMessageStorageKey = "showInfoMessage";
+const versionStorageKey = "app_version";
+
 const timerElement = document.getElementById("timer");
 const timerElements = document.querySelectorAll(".block-element");
 const form = document.getElementById("form");
@@ -14,6 +17,9 @@ const resetButton = document.getElementById("reset");
 const submitButton = document.getElementById("submit");
 const compactAside = document.getElementById("compactAside");
 const clearStorageButton = document.getElementById("clearStorage");
+const modalWrapper = document.getElementById("modal-wrapper");
+const modalCloseButton = document.getElementById("modal-close");
+const modalCheckbox = document.getElementById("modal-checkbox");
 const disabled = "disabled";
 const showAside = "aside--show";
 const developmentMode = true;
@@ -231,6 +237,7 @@ function createCardElement(date, title, value) {
 
   const card = document.createElement("div");
   card.className = "card";
+  card.title = "Переместить для сортировки";
 
   const icon = document.createElement("i");
   icon.className = "close icon icon--absolute";
@@ -293,7 +300,7 @@ function createCardElement(date, title, value) {
     e.stopPropagation();
 
     state.editedvalue = value; // добавляем в state текущее значение таймера задачи, чтобы возвращать старое значение в случае неверного ввода
-    this.style.color = "blue"; // меняем цвет текста
+    this.style.color = "blue";
     // добавляем для режима редактирования многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
     if (this.children.length === 2) {
       this.insertAdjacentHTML("beforeend", "<span>...</span>");
@@ -497,9 +504,36 @@ compactAside.addEventListener("click", function () {
   renderAside(false);
 });
 
+modalCloseButton.addEventListener("click", function () {
+  modalWrapper.classList.add("d-none");
+});
+
+modalCheckbox.addEventListener("change", function (event) {
+  localStorage.setItem(infoMessageStorageKey, event.target.checked ? 1 : 0);
+});
+
+function renderInfoMessage() {
+  const showInfoMessage = localStorage.getItem(infoMessageStorageKey) === "1";
+
+  if (!showInfoMessage) {
+    modalWrapper.classList.remove("d-none");
+  }
+}
+
+function validateCurrentVersion() {
+  const foundVersion = localStorage.getItem(versionStorageKey);
+
+  if (foundVersion !== version) {
+    localStorage.setItem(versionStorageKey, version);
+    localStorage.setItem(infoMessageStorageKey, 0);
+  }
+}
+
 document.addEventListener(
   "DOMContentLoaded",
   function () {
+    validateCurrentVersion();
+    renderInfoMessage();
     init();
   },
   false
