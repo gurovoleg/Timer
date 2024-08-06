@@ -39,8 +39,8 @@ body, * {
 	background: #1b1c1d	;
 	color: rba(255, 255, 255, 0.9);
 	left: -700px;
-	width: 300px;
-	max-width:300px;
+	width: 400px;
+	max-width:400px;
 	box-shadow: 0px 0px 3px 2px rgba(0, 0, 0, 0.9);
 	padding: 20px;
 	transition: all 0.4s ease;
@@ -83,7 +83,7 @@ body, * {
 .aside-content {
 	overflow: auto;
 	height: calc(100% - 60px - 48px - 50px);
-	width: 300px;
+	/* width: 300px; */
 }
 
 .aside--show {
@@ -146,7 +146,7 @@ body, * {
 .card {
 	position: relative;
 	display: flex;
-	width: 260px;
+	/* width: 260px; */
 	background-color: #fff;
 	border-radius: 4px;
 	padding: 15px 10px;
