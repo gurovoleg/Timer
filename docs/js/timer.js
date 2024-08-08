@@ -474,7 +474,8 @@ function loadSettings() {
 }
 
 function setTheme() {
-  const theme = localStorage.getItem(themeStorageKey) || "light";
+  const theme = localStorage.getItem(themeStorageKey) || "dark";
+
   document.documentElement.setAttribute("data-theme", theme);
   themeToggleButton.firstElementChild.className =
     theme === "dark" ? "icon sun" : "icon moon";
