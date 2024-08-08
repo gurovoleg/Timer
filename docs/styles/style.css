@@ -13,6 +13,33 @@ body {
 	}
 }
 
+.d-none {
+	display: none !important;
+}
+
+.custom-checkbox {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	cursor: pointer;
+	color: var(--font-color);
+
+	> div {
+		line-height: 1;
+		margin-top: 2px;
+	}
+}
+
+.theme-toggle-button {
+	color: var(--font-color);
+	cursor: pointer;
+	font-size: 20px;
+
+	position: fixed;
+	top: 20px;
+	right: 20px;
+}
+
 .container {
 	width: 600px;
 	max-width: 600px;
@@ -65,6 +92,10 @@ body {
 	}
 }
 
+.aside--show {
+	left: 0;
+}
+
 .aside--compact {
 	width: 80px;
 }
@@ -74,8 +105,8 @@ body {
 	overflow: hidden;
 }
 
-.d-none {
-	display: none !important;
+.aside-settings {
+	margin-bottom: 20px;
 }
 
 .aside-controls {
@@ -106,8 +137,31 @@ body {
 	width: 380px;
 }
 
-.aside--show {
-	left: 0;
+.timer-wrapper {
+	position: relative;
+	border: 1px solid var(--border-color);
+	border-top: 2px solid var(--secondary-color);
+	padding: 40px;
+	background-color: var(--bg-secondary-color);
+	border-radius: 4px;
+	transition: all 0.05s;
+	transform-style: preserve-3d;
+    overflow: hidden;
+	transition: all 0.1s ease;
+}
+
+.timer-wrapper::before {
+    content: '';
+    position: absolute;
+    top: var(--highlight-y, 100%);
+    left: var(--highlight-x, 50%);
+    width: 250%;
+    height: 250%;
+    background: radial-gradient(ellipse, var(--gradient-color-from), var(--gradient-color-to) 40%);
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+    pointer-events: none;
+	z-index: -1;
 }
 
 .timer {
@@ -135,19 +189,16 @@ body {
 	width: 65px;
 	height: 80px;
 	font-family: var(--font-secondary);
-	/* font-family: monospace; */
 	font-weight: 900;
 	font-size: 50px;
 	line-height: 1;
-	background-color: var(--bg-primary-color);
-	color: var(--font-color);
 
-	/* background-color: #fff; */
-	/* color: var(--font-secondary); */
+	background-color: var(--time-block-bg-color);
+	color: var(--time-block-color);
 	
 	padding: 5px 10px;
 	border-radius: 8px;
-	border: 1px solid var(--border-color);
+	border: 1px solid var(--time-block-border-color);
 
 	&:nth-child(odd) {
 		margin-right: 8px;
@@ -166,45 +217,18 @@ body {
 	padding: 20px 0px 40px 0px;
 }
 
-.timer-wrapper {
-	position: relative;
-	border: 1px solid var(--border-color);
-	border-top: 1px solid var(--secondary-color);
-	padding: 40px;
-	background-color: var(--bg-secondary-color);
-	border-radius: 4px;
-	transition: all 0.05s;
-	transform-style: preserve-3d;
-    overflow: hidden;
-	transition: all 0.1s ease;
-}
-
-.timer-wrapper::before {
-    content: '';
-    position: absolute;
-    top: var(--highlight-y, 100%);
-    left: var(--highlight-x, 50%);
-    width: 250%;
-    height: 250%;
-    background: radial-gradient(ellipse, var(--gradient-color-from), var(--gradient-color-to) 40%);
-    transform: translate(-50%, -50%);
-    transition: transform 0.2s ease;
-    pointer-events: none;
-	z-index: -1;
-}
-
 .ui.buttons {
 	width: 100%;
 
 	> button {
 		transition: all 0.3s;	
-		background-color: transprent !important;
 		background-color: var(--bg-primary-color) !important;
-		/* opacity: 0.5; */
+		color: var(--font-color) !important;
 
 		&:hover {
 			/* background-color: var(--secondary-color) !important; */
 			background-color: var(--primary-color) !important;
+			color: var(--white-color) !important;
 		}
 	}
 }
@@ -221,9 +245,9 @@ body {
 	border-radius: 4px;
 	padding: 15px 20px 15px 10px;
 	border: 1px solid var(--border-color);
+	border-left: 2px solid var(--primary-color);
 	align-items: center;
 	margin-bottom: 10px;
-	border-left: 1px solid var(--primary-color);
 	left: 0;
 	cursor: pointer;
 
@@ -325,9 +349,9 @@ body {
 
 .edit-mode{
 	/* color: var(--primary-color); */
-	border: 1px dotted var(--primary-color) !important;
-	border: 1px dotted var(--white-color) !important;
+	border: 1px dotted var(--font-color) !important;
 	border-radius: 4px;
+
 	> * {
 		color: var(--primary-color);
 	}
@@ -419,17 +443,8 @@ body {
 	margin-top: 10px;
 }
 
-.modal-checkbox {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+.modal-footer {
 	margin-top: 20px;
-	cursor: pointer;
-
-	> div {
-		line-height: 1;
-		margin-top: 2px;
-	}
 }
 
 @media (max-width: 991px) {

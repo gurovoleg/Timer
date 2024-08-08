@@ -1,7 +1,9 @@
-const version = "2.0";
+const version = "3.0";
+const storageKey = "timer";
 const infoMessageStorageKey = "showInfoMessage";
 const versionStorageKey = "app_version";
-const storageKey = "timer";
+const themeStorageKey = "theme";
+const asideHideStorageKey = "aside_settings_hide";
 
 const timerBlock = document.getElementById("timer-wrapper");
 const timerElement = document.getElementById("timer");
@@ -17,6 +19,7 @@ const startButton = document.getElementById("start");
 const stopButton = document.getElementById("stop");
 const resetButton = document.getElementById("reset");
 const submitButton = document.getElementById("submit");
+const themeToggleButton = document.getElementById("theme-toggle-button");
 const compactAside = document.getElementById("compactAside");
 const clearStorageButton = document.getElementById("clearStorage");
 const modalWrapper = document.getElementById("modal-wrapper");
@@ -465,16 +468,45 @@ function validateCurrentVersion() {
   }
 }
 
+function loadSettings() {
+  const hideAside = localStorage.getItem(asideHideStorageKey) === "1";
+  asideHideCheckbox.checked = Number(hideAside);
+}
+
+function setTheme() {
+  const theme = localStorage.getItem(themeStorageKey) || "light";
+  document.documentElement.setAttribute("data-theme", theme);
+  themeToggleButton.firstElementChild.className =
+    theme === "dark" ? "icon sun" : "icon moon";
+}
+
 // eventListeners
 document.addEventListener(
   "DOMContentLoaded",
   function () {
     validateCurrentVersion();
     renderInfoMessage();
+    setTheme();
     init();
   },
   false
 );
+
+themeToggleButton.addEventListener("click", function () {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute("data-theme");
+  const isDark = currentTheme === "dark";
+
+  if (isDark) {
+    html.setAttribute("data-theme", "light");
+    this.firstElementChild.className = "icon moon";
+  } else {
+    html.setAttribute("data-theme", "dark");
+    this.firstElementChild.className = "icon sun";
+  }
+
+  localStorage.setItem(themeStorageKey, isDark ? "light" : "dark");
+});
 
 startButton.addEventListener("click", function () {
   state.timer.id = startTimer();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-dark-theme>
+<html lang="ru">
 
 <head>
 	<meta charset="UTF-8">
@@ -21,6 +21,10 @@
 </head>
 
 <body>
+	<div id="theme-toggle-button" class="theme-toggle-button">
+		<i class="icon moon"></i>
+	</div>
+
 	<div id="modal-wrapper" class="modal-wrapper d-none">
 		<div class="modal-body">
 			<i id="modal-close" class="close icon icon--absolute"></i>
@@ -46,10 +50,12 @@
 				</ul>
 			</div>
 
-			<label class="modal-checkbox">
-				<input id="modal-checkbox" type="checkbox">
-				<div>Do not show again</div>
-			</label>
+			<div class="modal-footer">
+				<label class="custom-checkbox">
+					<input id="modal-checkbox" type="checkbox">
+					<div>Do not show again</div>
+				</label>
+			</div>
 		</div>
 	</div>
 
@@ -106,6 +112,7 @@
 			<div class='aside-controls'>
 				<i id="compactAside" class="angle double left icon"></i>
 			</div>
+
 			<div class="aside-wrapper">
 				<div class="ui input search">
 					<input id="search" type="text" placeholder="Search...">

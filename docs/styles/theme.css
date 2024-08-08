@@ -1,26 +1,38 @@
 :root {
-	--bg-primary-color: #fff;
-	--bg-secondary-color: #161b22;
-    --light-grey-color: #30363d;
-	--border-color: #30363d;
-    --font-color: #000;
-	--primary-color: #b32657;
-	--secondary-color: #3C91E6;
+    --font-primary: 'Calibri', sans-serif;
+	--font-secondary: 'Greycliff CF', sans-serif;
+
+	--bg-primary-color: #f6f8fa;
+	--bg-secondary-color: #fff;
+	--border-color: #d0d7de;
+    --font-color: #1f2328;
+	--primary-color: rgb(215, 46, 105);
+	--secondary-color: rgb(60, 145, 230);
+    --time-block-bg-color: #1f2328;
+    --time-block-color: #fff;
+    --time-block-border-color: #1f2328;
+     /* --gradient-color-from: rgba(239, 89, 141, 0.1); */
+     /* --gradient-color-to: rgba(246, 248, 250, 0.1); */
+
 	--white-color: #fff;
-    --gradient-color-from: rgba(20, 85, 149, 0.3);
-    --gradient-color-to: rgba(22, 27, 34, 0.1);
-    --success-color: #1b902b;
+    --light-grey-color: #30363d;
+    --success-color: #1f883d;
     --danger-color: rgb(140, 15, 15);
 
-	--font-primary: 'Calibri', sans-serif;
-	--font-secondary: 'Greycliff CF', sans-serif;
+
 }
 
-[data-dark-theme] {
+[data-theme="dark"] {
+    --font-primary: 'Calibri', sans-serif;
 	--bg-primary-color: #0d1117;
+    --bg-secondary-color: #161b22;
+    --border-color: #30363d;
 	--font-color: #fff;
     --primary-color: #b32657;
 	--secondary-color: #3C91E6;
+    --time-block-bg-color: #0d1117;
+    --time-block-color: #fff;
+    --time-block-border-color: #30363d;
     --gradient-color-from: rgba(20, 85, 149, 0.3);
     --gradient-color-to: rgba(22, 27, 34, 0.1);
 }   
