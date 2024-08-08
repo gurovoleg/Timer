@@ -59,8 +59,16 @@ body {
 		font-family: var(--font-secondary);
 		color: var(--font-color);    }
 
-	span:last-child {
+	span:nth-child(2) {
+		color: var(--primary-color);
+	}
+
+	span:nth-child(3) {
 		color: var(--secondary-color);
+	}
+
+	div {
+		font-size: 16px;
 	}
 }
 
