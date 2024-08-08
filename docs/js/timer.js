@@ -240,7 +240,7 @@ function createCardElement(date, title, value) {
 
   const card = document.createElement("div");
   card.className = "card";
-  card.title = "Переместить для сортировки";
+  card.title = "Drag'n drop to sort";
 
   const icon = document.createElement("i");
   icon.className = "icon close icon--absolute";
@@ -265,7 +265,7 @@ function createCardElement(date, title, value) {
 
   const rest = `
 		<i class="stopwatch icon bounce"></i>
-    <i class="play icon"></i>
+    <i class="play icon" title="Start task"></i>
     <div class="card-content">
 	  	<div class="date">${date}</div>
     	<div id="cardTime" class="time" title="Edit time">
