@@ -1,7 +1,9 @@
 const version = "2.0";
 const infoMessageStorageKey = "showInfoMessage";
 const versionStorageKey = "app_version";
+const storageKey = "timer";
 
+const timerBlock = document.getElementById("timer-wrapper");
 const timerElement = document.getElementById("timer");
 const timerElements = document.querySelectorAll(".block-element");
 const form = document.getElementById("form");
@@ -22,7 +24,7 @@ const modalCloseButton = document.getElementById("modal-close");
 const modalCheckbox = document.getElementById("modal-checkbox");
 const disabled = "disabled";
 const showAside = "aside--show";
-const developmentMode = true;
+const addMockData = false;
 
 Sortable.create(asideContent, {
   group: "aside-items",
@@ -56,8 +58,7 @@ const state = {
   keyCode: undefined,
 };
 
-// test mode
-if (!developmentMode) {
+if (addMockData) {
   const data = generateMockData();
   setMockData(data);
 }
@@ -148,7 +149,6 @@ function renderAside(update = true) {
       asideWrapper.classList.remove("d-none");
       compactAside.classList.remove("icon--rotate");
     }
-    console.log("renderAside from Timeout");
   }, 100);
 }
 
@@ -233,14 +233,14 @@ function resetTimer() {
 }
 
 function createCardElement(date, title, value) {
-  title = title || "Нет названия";
+  title = title || "Unknown";
 
   const card = document.createElement("div");
   card.className = "card";
   card.title = "Переместить для сортировки";
 
   const icon = document.createElement("i");
-  icon.className = "close icon icon--absolute";
+  icon.className = "icon close icon--absolute";
 
   // remove task from tasks
   icon.addEventListener("click", function (e) {
@@ -265,15 +265,18 @@ function createCardElement(date, title, value) {
     <i class="play icon"></i>
     <div class="card-content">
 	  	<div class="date">${date}</div>
-    	<div id="cardTime" class="time" title="Редактировать">
-    		<span id="editableTimer" contenteditable="true">${value}</span>
+    	<div id="cardTime" class="time" title="Edit time">
+    		<span id="editableTimer">${value}</span>
     		<i class="pencil alternate icon"></i>
     	</div>
-    	<div id="cardTitle" class="description" contenteditable="true" title="Редактировать">${title}</div>
+    	<div id="cardTitle" class="description" title="Edit title">${title}</div>
     </div>`;
 
-  // запуск продолжения старого задания
-  card.addEventListener("click", function () {
+  card.insertAdjacentHTML("beforeEnd", rest);
+
+  const playIcon = card.querySelector(".icon.play");
+
+  playIcon.addEventListener("click", function () {
     const timer = value.split(":").map((str) => Number(str));
     state.timer = {
       ...state.timer,
@@ -282,8 +285,10 @@ function createCardElement(date, title, value) {
       s: timer[2],
     };
     state.taskName = title;
+
     stopTimer();
     renderTimer();
+
     document.querySelector(".main").classList.add("flipInX");
 
     setTimeout(() => {
@@ -291,21 +296,21 @@ function createCardElement(date, title, value) {
     }, 700);
   });
 
-  card.insertAdjacentHTML("beforeEnd", rest);
-
-  // Добавляем обработчик для редактирования времени
+  // time edit handler
   const timeBlock = card.querySelector("#cardTime");
 
-  timeBlock.addEventListener("click", function (e) {
+  timeBlock.addEventListener("dblclick", function (e) {
     e.stopPropagation();
 
     state.editedvalue = value; // добавляем в state текущее значение таймера задачи, чтобы возвращать старое значение в случае неверного ввода
-    this.style.color = "blue";
+
     // добавляем для режима редактирования многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
     if (this.children.length === 2) {
       this.insertAdjacentHTML("beforeend", "<span>...</span>");
     }
     const timeElement = this.firstElementChild;
+    timeElement.classList.add("edit-mode");
+    timeElement.contentEditable = true;
     timeElement.focus();
     timeElement.addEventListener("blur", () => blurHandler(timeElement, title));
     timeElement.addEventListener("input", (e) =>
@@ -314,13 +319,16 @@ function createCardElement(date, title, value) {
     timeElement.addEventListener("keydown", (e) => (state.keyCode = e.keyCode));
   });
 
-  // Добавляем обработчик для редактирования названия
+  // title edit handler
   const cardTitle = card.querySelector("#cardTitle");
 
-  cardTitle.addEventListener("click", function (e) {
+  cardTitle.addEventListener("dblclick", function (e) {
     e.stopPropagation();
 
-    this.style.color = "blue";
+    this.contentEditable = true;
+    this.focus();
+
+    this.classList.add("edit-mode");
   });
 
   cardTitle.addEventListener("blur", function (e) {
@@ -440,7 +448,34 @@ function sortTasksOnDragNDrop(event) {
   init();
 }
 
+function renderInfoMessage() {
+  const showInfoMessage = localStorage.getItem(infoMessageStorageKey) === "1";
+
+  if (!showInfoMessage) {
+    modalWrapper.classList.remove("d-none");
+  }
+}
+
+function validateCurrentVersion() {
+  const foundVersion = localStorage.getItem(versionStorageKey);
+
+  if (foundVersion !== version) {
+    localStorage.setItem(versionStorageKey, version);
+    localStorage.setItem(infoMessageStorageKey, 0);
+  }
+}
+
 // eventListeners
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
+    validateCurrentVersion();
+    renderInfoMessage();
+    init();
+  },
+  false
+);
+
 startButton.addEventListener("click", function () {
   state.timer.id = startTimer();
   state.controls.start = false;
@@ -512,29 +547,31 @@ modalCheckbox.addEventListener("change", function (event) {
   localStorage.setItem(infoMessageStorageKey, event.target.checked ? 1 : 0);
 });
 
-function renderInfoMessage() {
-  const showInfoMessage = localStorage.getItem(infoMessageStorageKey) === "1";
+timerBlock.addEventListener("mousemove", function (e) {
+  const { width, height, left, top } = timerBlock.getBoundingClientRect();
+  const centerX = left + width / 2;
+  const centerY = top + height / 2;
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
 
-  if (!showInfoMessage) {
-    modalWrapper.classList.remove("d-none");
-  }
-}
+  const distX = (mouseX - centerX) / (width / 2);
+  const distY = (mouseY - centerY) / (height / 2);
 
-function validateCurrentVersion() {
-  const foundVersion = localStorage.getItem(versionStorageKey);
+  const rotateX = distY * 3; // Change to adjust rotation intensity
+  const rotateY = distX * -3; // Change to adjust rotation intensity
 
-  if (foundVersion !== version) {
-    localStorage.setItem(versionStorageKey, version);
-    localStorage.setItem(infoMessageStorageKey, 0);
-  }
-}
+  this.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    validateCurrentVersion();
-    renderInfoMessage();
-    init();
-  },
-  false
-);
+  // Move the highlight
+  const highlightX = ((mouseX - left) / width) * 100;
+  const highlightY = ((mouseY - top) / height) * 100;
+
+  this.style.setProperty("--highlight-x", `${highlightX}%`);
+  this.style.setProperty("--highlight-y", `${highlightY}%`);
+});
+
+timerBlock.addEventListener("mouseleave", function () {
+  this.style.transform = "rotateX(0deg) rotateY(0deg)";
+  // this.style.setProperty("--highlight-x", "50%"); // left
+  // this.style.setProperty("--highlight-y", "100%"); // top
+});

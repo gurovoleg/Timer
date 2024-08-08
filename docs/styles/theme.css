@@ -1,0 +1,26 @@
+:root {
+	--bg-primary-color: #fff;
+	--bg-secondary-color: #161b22;
+    --light-grey-color: #30363d;
+	--border-color: #30363d;
+    --font-color: #000;
+	--primary-color: #b32657;
+	--secondary-color: #3C91E6;
+	--white-color: #fff;
+    --gradient-color-from: rgba(20, 85, 149, 0.3);
+    --gradient-color-to: rgba(22, 27, 34, 0.1);
+    --success-color: #1b902b;
+    --danger-color: rgb(140, 15, 15);
+
+	--font-primary: 'Calibri', sans-serif;
+	--font-secondary: 'Greycliff CF', sans-serif;
+}
+
+[data-dark-theme] {
+	--bg-primary-color: #0d1117;
+	--font-color: #fff;
+    --primary-color: #b32657;
+	--secondary-color: #3C91E6;
+    --gradient-color-from: rgba(20, 85, 149, 0.3);
+    --gradient-color-to: rgba(22, 27, 34, 0.1);
+}   

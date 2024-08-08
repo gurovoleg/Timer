@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-dark-theme>
 
 <head>
 	<meta charset="UTF-8">
@@ -7,12 +7,13 @@
 	<title>Timer</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
 
-	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet">
+	<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet"> -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> -->
 	<link href="fonts/calibri.css" rel="stylesheet">
+	<link rel="stylesheet" href="./fonts/greycliff/stylesheet.css">
 
-	<link rel="stylesheet" href="./animation.css">
-	<link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="./styles/animation.css">
+	<link rel="stylesheet" href="./styles/style.css">
 
 	<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
@@ -45,12 +46,12 @@
 
 	<div class="container">
 		<div class="header">
-			<div>Online</div>
-			<div>Секундомер</div>
+			<span>TIME</span>
+			<span>TRACKER</span>
 		</div>
 
 		<div class="main">
-			<div class="ui black segment">
+			<div id="timer-wrapper" class="timer-wrapper">
 
 				<div class="timer">
 					<div class="timer-value">
@@ -81,9 +82,9 @@
 
 				<form id="form">
 					<div class="ui action input" style="width:100%">
-						<input id="formInput" type="text" placeholder="Название задачи...">
-						<button id="submit" class="ui icon button disabled black">
-							<i class="save icon"></i> &nbsp;&nbsp;Сохранить
+						<input id="formInput" type="text" placeholder="Task name...">
+						<button id="submit" class="ui button disabled blue">
+							Save
 						</button>
 					</div>
 					<div id="input-error" class="input-error"></div>
@@ -98,18 +99,16 @@
 			</div>
 			<div class="aside-wrapper">
 				<div class="ui input search">
-					<input id="search" type="text" placeholder="Найти...">
+					<input id="search" type="text" placeholder="Search...">
 				</div>
 				<div id="asideContent" class="aside-content"></div>
-				<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Удалить
-					все</button>
+				<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Remove
+					all</button>
 			</div>
 		</div>
 
 	</div>
-	<script>
-		const storageKey = 'timer'
-	</script>
+
 	<script src="js/Sortable.min.js"></script>
 	<script src="js/mock.js"></script>
 	<script src="js/timer.js"></script>
