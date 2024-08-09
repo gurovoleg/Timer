@@ -67,8 +67,6 @@ if (addMockData) {
 }
 
 async function init() {
-  inputError.textContent = "";
-
   const storage = await getStorage();
   const fixedStorage = fixStorageToArray(storage); // legacy data fix
 
@@ -163,7 +161,6 @@ function renderTimer() {
   timerElements.forEach((el, idx) => {
     el.innerHTML = timer[idx];
   });
-  inputError.textContent = "";
 }
 
 function getTimerValue() {
@@ -242,11 +239,49 @@ function createCardElement(date, title, value) {
   card.className = "card";
   card.title = "Drag'n drop to sort";
 
-  const icon = document.createElement("i");
-  icon.className = "icon close icon--absolute";
+  const rest = `
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-close icon--absolute">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path
+        d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
+    </svg>
+		<div class="card-icons">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" class="icon-stopwatch">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M5 13a7 7 0 1 0 14 0a7 7 0 0 0 -14 0z" />
+        <path d="M14.5 10.5l-2.5 2.5" />
+        <path d="M17 8l1 -1" />
+        <path d="M14 3h-4" />
+      </svg>
+
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-play">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path
+          d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
+      </svg>
+    </div>  
+    <div class="card-content">
+	  	<div class="date">${date}</div>
+    	<div id="cardTime" class="time" title="Edit time">
+    		<span id="editableTimer">${value}</span>
+
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+          stroke-linecap="round" stroke-linejoin="round" class="icon-edit">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+          <path d="M13.5 6.5l4 4" />
+        </svg>
+    </div>
+    	<div id="cardTitle" class="description" title="Edit title">${title}</div>
+    </div>`;
+
+  card.insertAdjacentHTML("beforeEnd", rest);
+
+  const closeIcon = card.querySelector(".icon-close");
 
   // remove task from tasks
-  icon.addEventListener("click", function (e) {
+  closeIcon.addEventListener("click", function (e) {
     e.stopPropagation();
     this.parentNode.classList.add("card--hide");
 
@@ -261,23 +296,7 @@ function createCardElement(date, title, value) {
     }, 700);
   });
 
-  card.append(icon);
-
-  const rest = `
-		<i class="stopwatch icon bounce"></i>
-    <i class="play icon" title="Start task"></i>
-    <div class="card-content">
-	  	<div class="date">${date}</div>
-    	<div id="cardTime" class="time" title="Edit time">
-    		<span id="editableTimer">${value}</span>
-    		<i class="pencil alternate icon"></i>
-    	</div>
-    	<div id="cardTitle" class="description" title="Edit title">${title}</div>
-    </div>`;
-
-  card.insertAdjacentHTML("beforeEnd", rest);
-
-  const playIcon = card.querySelector(".icon.play");
+  const playIcon = card.querySelector(".icon-play");
 
   playIcon.addEventListener("click", function () {
     const timer = value.split(":").map((str) => Number(str));
@@ -477,8 +496,14 @@ function setTheme() {
   const theme = localStorage.getItem(themeStorageKey) || "dark";
 
   document.documentElement.setAttribute("data-theme", theme);
-  themeToggleButton.firstElementChild.className =
-    theme === "dark" ? "icon sun" : "icon moon";
+
+  if (theme === "dark") {
+    themeToggleButton.firstElementChild.classList.remove("d-none");
+    themeToggleButton.lastElementChild.classList.add("d-none");
+  } else {
+    themeToggleButton.firstElementChild.classList.add("d-none");
+    themeToggleButton.lastElementChild.classList.remove("d-none");
+  }
 }
 
 // eventListeners
@@ -500,10 +525,12 @@ themeToggleButton.addEventListener("click", function () {
 
   if (isDark) {
     html.setAttribute("data-theme", "light");
-    this.firstElementChild.className = "icon moon";
+    this.firstElementChild.classList.add("d-none");
+    this.lastElementChild.classList.remove("d-none");
   } else {
     html.setAttribute("data-theme", "dark");
-    this.firstElementChild.className = "icon sun";
+    this.firstElementChild.classList.remove("d-none");
+    this.lastElementChild.classList.add("d-none");
   }
 
   localStorage.setItem(themeStorageKey, isDark ? "light" : "dark");

@@ -1,6 +1,12 @@
 :root {
-    --font-primary: 'Calibri', sans-serif;
+    --font-primary: 'Verdana', sans-serif;
 	--font-secondary: 'Greycliff CF', sans-serif;
+    --font-size: 14px;
+    --font-size-mobile: 12px;
+
+    --border-radius: 4px;
+    --control-height: 38px;
+    --control-height-mobile: 32px;
 
 	--bg-primary-color: #f6f8fa;
 	--bg-secondary-color: #fff;
@@ -18,12 +24,9 @@
     --light-grey-color: #30363d;
     --success-color: #1f883d;
     --danger-color: rgb(140, 15, 15);
-
-
 }
 
 [data-theme="dark"] {
-    --font-primary: 'Calibri', sans-serif;
 	--bg-primary-color: #0d1117;
     --bg-secondary-color: #161b22;
     --border-color: #30363d;

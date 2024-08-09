@@ -3,32 +3,51 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport"
-		content="width=device-width,initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0" />
-	<title>Timer</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+	<meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no, maximum-scale=1.0" />
+	<title>Time Tracker</title>
 
-	<!-- <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet"> -->
-	<!-- <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> -->
-	<link href="fonts/calibri.css" rel="stylesheet">
 	<link rel="stylesheet" href="./fonts/greycliff/stylesheet.css">
-
 	<link rel="stylesheet" href="./styles/animation.css">
 	<link rel="stylesheet" href="./styles/style.css">
 
 	<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16x16.png">
 	<!-- <link rel="icon" href="./assets/favicon.png"> -->
 </head>
 
 <body>
 	<div id="theme-toggle-button" class="theme-toggle-button">
-		<i class="icon moon"></i>
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-sun">
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+			<path
+				d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
+			<path
+				d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+			<path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+			<path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+			<path
+				d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
+			<path
+				d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+			<path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+			<path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+		</svg>
+
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-moon">
+			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+			<path
+				d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" />
+		</svg>
 	</div>
 
 	<div id="modal-wrapper" class="modal-wrapper d-none">
 		<div class="modal-body">
-			<i id="modal-close" class="close icon icon--absolute"></i>
+			<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-close icon--absolute"
+				id="modal-close">
+				<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+				<path
+					d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
+			</svg>
 
 			<div class="modal-title">Release 3.0</div>
 			<div class="modal-content">
@@ -52,7 +71,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<label class="custom-checkbox">
+				<label class="checkbox">
 					<input id="modal-checkbox" type="checkbox">
 					<div>Do not show again</div>
 				</label>
@@ -76,12 +95,18 @@
 						<div class="timer-value-block">
 							<div class="block-element">0</div>
 							<div class="block-element">0</div>
-							<div class="block-separator">:</div>
+							<div class="block-separator">
+								<div></div>
+								<div></div>
+							</div>
 						</div>
 						<div class="timer-value-block">
 							<div class="block-element">0</div>
 							<div class="block-element">0</div>
-							<div class="block-separator">:</div>
+							<div class="block-separator">
+								<div></div>
+								<div></div>
+							</div>
 						</div>
 						<div class="timer-value-block">
 							<div class="block-element">0</div>
@@ -90,46 +115,73 @@
 					</div>
 				</div>
 
-				<div class="controls">
-					<div class="ui icon buttons black">
-						<button id="start" class="ui button"><i class="play icon"></i></button>
-						<button id="stop" class="ui button"><i class="pause icon"></i></button>
-						<button id="reset" class="ui button"><i class="stop icon"></i></button>
+				<div class="timer-controls">
+					<div id="start" class="button button-start">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path
+								d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
+						</svg>
+					</div>
+					<div id="stop" class="button button-stop">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
+							<path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
+						</svg>
+					</div>
+					<div id="reset" class="button button-reset">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path
+								d="M11.247 3.341l-7 8c-.565 .647 -.106 1.659 .753 1.659h14c.86 0 1.318 -1.012 .753 -1.659l-7 -8a1 1 0 0 0 -1.506 0z" />
+							<path d="M18 15h-12a2 2 0 0 0 -2 2v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2z" />
+						</svg>
 					</div>
 				</div>
 
 				<form id="form">
-					<div class="ui action input" style="width:100%">
+					<div class="form-wrapper">
 						<input id="formInput" type="text" placeholder="Task name...">
-						<button id="submit" class="ui button disabled blue">
+						<div id="submit" class="button disabled">
 							Save
-						</button>
+						</div>
 					</div>
-					<div id="input-error" class="input-error"></div>
 				</form>
-
 			</div>
 		</div>
 
 		<div id="aside" class="aside">
 			<div class='aside-controls'>
-				<i id="compactAside" class="angle double left icon"></i>
+				<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+					stroke-linecap="round" stroke-linejoin="round" class="aside-toggle-icon" id="compactAside">
+					<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+					<path d="M11 7l-5 5l5 5" />
+					<path d="M17 7l-5 5l5 5" />
+				</svg>
 			</div>
 
 			<div class="aside-wrapper">
-				<div class="ui input search">
+				<div class="aside-input-search">
 					<input id="search" type="text" placeholder="Search...">
 				</div>
 				<div id="asideContent" class="aside-content"></div>
-				<button id="clearStorage" class="ui red button button--delete"><i class="trash icon"></i>Remove
-					all</button>
+				<div id="clearStorage" class="button aside-remove-button">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path
+							d="M20 6a1 1 0 0 1 .117 1.993l-.117 .007h-.081l-.919 11a3 3 0 0 1 -2.824 2.995l-.176 .005h-8c-1.598 0 -2.904 -1.249 -2.992 -2.75l-.005 -.167l-.923 -11.083h-.08a1 1 0 0 1 -.117 -1.993l.117 -.007h16z" />
+						<path
+							d="M14 2a2 2 0 0 1 2 2a1 1 0 0 1 -1.993 .117l-.007 -.117h-4l-.007 .117a1 1 0 0 1 -1.993 -.117a2 2 0 0 1 1.85 -1.995l.15 -.005h4z" />
+					</svg>
+					Remove all
+				</div>
 			</div>
 		</div>
 
 	</div>
 
 	<script src="js/Sortable.min.js"></script>
-	<script src="js/mock.js"></script>
 	<script src="js/timer.js"></script>
 </body>
 
