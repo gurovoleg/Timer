@@ -396,7 +396,7 @@
 }
 
 .modal-title {
-	font-size: 20px;
+	font-size: 18px;
 	font-weight: 700;
 	padding: 10px 0;
 	border-bottom: 1px solid var(--primary-color);
@@ -404,16 +404,22 @@
 
 .modal-content {
 	padding: 10px 0;
+	font-size: 14px;
 
 	ul {
-		padding: 5px 0;
+		padding: 10px 0;
 		margin-left: 20px;
+	}
+
+	li {
+		margin-bottom: 5px;
 	}
 }
 
 .modal-content-header {
 	color: var(--secondary-color);
-	font-weight: 700;
+	font-size: 16px;
+	/* font-weight: 500; */
 	margin-top: 10px;
 }
 
