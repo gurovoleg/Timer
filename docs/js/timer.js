@@ -562,7 +562,7 @@ addInput.addEventListener("input", function () {
 });
 
 // add task to Aside
-form.addEventListener("submit", function (e) {
+submitButton.addEventListener("click", function (e) {
   e.preventDefault();
 
   const name = addInput.value.trim();
