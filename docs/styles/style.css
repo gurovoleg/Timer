@@ -111,6 +111,7 @@
 	margin-top: 20px;
 	width: 100%;
 	background-color: var(--danger-color);
+	border-color: var(--danger-color);
 
 	svg {
 		margin-right: 10px;
@@ -287,6 +288,11 @@
 		transition: all 0.4s ease;
 	}
 
+	.icon-close:hover {
+		fill: var(--font-color);
+		/* opacity: 0.5; */
+	}
+
 	.icon-stopwatch, .icon-play {
 		height: 45px;
 		width: 45px;
@@ -343,7 +349,6 @@
 		align-items: center;
 		color: var(--secondary-color);
 		font-size: 16px;
-		/* font-weight: bold; */
 	
 		> span {
 			display: inline-block;
@@ -359,6 +364,11 @@
 			width: 18px;
 			margin-bottom: 3px;
 			margin-left: 4px;
+
+			&:hover {
+				animation-name: shake;
+				animation-duration: 1s;
+			}
 		}
 	}
 }

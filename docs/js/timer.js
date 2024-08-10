@@ -263,7 +263,7 @@ function createCardElement(date, title, value) {
     </div>  
     <div class="card-content">
 	  	<div class="date">${date}</div>
-    	<div id="cardTime" class="time" title="Edit time">
+    	<div id="cardTime" class="time" title="Double-click to edit">
     		<span id="editableTimer">${value}</span>
 
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
@@ -273,7 +273,7 @@ function createCardElement(date, title, value) {
           <path d="M13.5 6.5l4 4" />
         </svg>
     </div>
-    	<div id="cardTitle" class="description" title="Edit title">${title}</div>
+    	<div id="cardTitle" class="description" title="Double-click to edit">${title}</div>
     </div>`;
 
   card.insertAdjacentHTML("beforeEnd", rest);

@@ -23,7 +23,7 @@
 	--white-color: #fff;
     --light-grey-color: #30363d;
     --success-color: #1f883d;
-    --danger-color: rgb(140, 15, 15);
+    --danger-color: rgb(198, 17, 17);
 }
 
 [data-theme="dark"] {
@@ -38,4 +38,5 @@
     --time-block-border-color: #30363d;
     --gradient-color-from: rgba(20, 85, 149, 0.3);
     --gradient-color-to: rgba(22, 27, 34, 0.1);
+    --danger-color: rgb(140, 15, 15);
 }   
