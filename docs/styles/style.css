@@ -237,20 +237,24 @@
 }
 
 .form-wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	text-align: center;
 
-	input {
-		border-top-right-radius: 0;
-		border-bottom-right-radius: 0;
+	textarea {
+		resize: none;
+		display: block;
+		max-height: 200px;
+		/* border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0; */
 	}
 
 	.button {
+		/* border-top-left-radius: 0;
+		border-top-right-radius: 0; */
+
 		background-color: var(--secondary-color);
 		border: 1px solid var(--secondary-color);
-		border-top-left-radius: 0;
-		border-bottom-left-radius: 0;
+		margin-top: 10px;
+		width: 100%;
 	}
 }
 

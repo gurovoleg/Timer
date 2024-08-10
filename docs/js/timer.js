@@ -10,7 +10,6 @@ const timerElement = document.getElementById("timer");
 const timerElements = document.querySelectorAll(".block-element");
 const form = document.getElementById("form");
 const addInput = document.getElementById("formInput");
-const inputError = document.getElementById("input-error");
 const searchInput = document.getElementById("search");
 const aside = document.getElementById("aside");
 const asideContent = document.getElementById("asideContent");
@@ -25,6 +24,7 @@ const clearStorageButton = document.getElementById("clearStorage");
 const modalWrapper = document.getElementById("modal-wrapper");
 const modalCloseButton = document.getElementById("modal-close");
 const modalCheckbox = document.getElementById("modal-checkbox");
+
 const disabled = "disabled";
 const showAside = "aside--show";
 const addMockData = false;
@@ -59,6 +59,7 @@ const state = {
   editedvalue: "",
   carriagePosition: 0,
   keyCode: undefined,
+  enableTimerBlockTransformation: true,
 };
 
 if (addMockData) {
@@ -106,7 +107,14 @@ function render() {
 // render Timer controls
 function renderControls() {
   const { start, stop } = state.controls;
+
   addInput.value = state.taskName;
+  addInput.style.height = "auto";
+
+  if (addInput.value) {
+    addInput.style.height = addInput.scrollHeight + 4 + "px";
+  }
+
   state.taskName.trim()
     ? submitButton.classList.remove(disabled)
     : submitButton.classList.add(disabled);
@@ -564,7 +572,18 @@ clearStorageButton.addEventListener("click", function () {
 
 addInput.addEventListener("input", function () {
   state.taskName = this.value;
+
   renderControls();
+});
+
+addInput.addEventListener("focus", function () {
+  resetTimerBlockAnimationStyles();
+
+  state.enableTimerBlockTransformation = false;
+});
+
+addInput.addEventListener("blur", function () {
+  state.enableTimerBlockTransformation = true;
 });
 
 // add task to Aside
@@ -613,7 +632,22 @@ modalCheckbox.addEventListener("change", function (event) {
   localStorage.setItem(infoMessageStorageKey, event.target.checked ? 1 : 0);
 });
 
-timerBlock.addEventListener("mousemove", function (e) {
+// timer block animation
+function resetTimerBlockAnimationStyles() {
+  if (!state.enableTimerBlockTransformation) {
+    return;
+  }
+
+  timerBlock.style.transform = "rotateX(0deg) rotateY(0deg)";
+  // timerBlock.style.setProperty("--highlight-x", "50%"); // left
+  // timerBlock.style.setProperty("--highlight-y", "100%"); // top
+}
+
+function updateTimerBlockAnimationStyles(e) {
+  if (!state.enableTimerBlockTransformation) {
+    return;
+  }
+
   const { width, height, left, top } = timerBlock.getBoundingClientRect();
   const centerX = left + width / 2;
   const centerY = top + height / 2;
@@ -634,10 +668,7 @@ timerBlock.addEventListener("mousemove", function (e) {
 
   this.style.setProperty("--highlight-x", `${highlightX}%`);
   this.style.setProperty("--highlight-y", `${highlightY}%`);
-});
+}
 
-timerBlock.addEventListener("mouseleave", function () {
-  this.style.transform = "rotateX(0deg) rotateY(0deg)";
-  // this.style.setProperty("--highlight-x", "50%"); // left
-  // this.style.setProperty("--highlight-y", "100%"); // top
-});
+timerBlock.addEventListener("mousemove", updateTimerBlockAnimationStyles);
+timerBlock.addEventListener("mouseleave", resetTimerBlockAnimationStyles);
