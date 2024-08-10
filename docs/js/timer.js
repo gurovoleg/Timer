@@ -324,9 +324,8 @@ function createCardElement(date, title, value) {
   timeBlock.addEventListener("dblclick", function (e) {
     e.stopPropagation();
 
-    state.editedvalue = value; // добавляем в state текущее значение таймера задачи, чтобы возвращать старое значение в случае неверного ввода
+    state.editedvalue = value; // add current value to state to return it if input is invalid
 
-    // добавляем для режима редактирования многоточие, если еще не было добавлено (кол-во детей у родителя равно 2)
     if (this.children.length === 2) {
       this.insertAdjacentHTML("beforeend", "<span>...</span>");
     }
@@ -361,25 +360,32 @@ function createCardElement(date, title, value) {
       task.name = newTitle;
 
       localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks));
-    }
 
-    init();
+      init();
+    } else {
+      this.classList.remove("edit-mode");
+    }
   });
 
   return card;
 }
 
-// обработчик blur после редактирования таймера
+// time onBlur handler
 function blurHandler(element, title) {
-  let values = element.textContent.split(":");
+  const values = element.textContent.split(":");
   const formatValue = (value) =>
     value.length === 0 ? "00" : value.length === 1 ? `0${value}` : value;
 
-  newValue = values.map((value) => formatValue(value)).join(":");
-
-  element.textContent = newValue;
+  const newValue = values.map((value) => formatValue(value)).join(":");
 
   const task = state.aside.tasks.find((item) => item.name === title);
+
+  if (task.time === newValue) {
+    element.textContent = task.time;
+
+    return;
+  }
+
   task.time = newValue;
   task.date = new Date().toLocaleString("ru");
 
@@ -387,11 +393,12 @@ function blurHandler(element, title) {
   init();
 }
 
-// обработчик вводимых данных
+// input time handler
 function updateTimerHandler(value, element) {
-  const currentValue = state.editedvalue;
   const selection = window.getSelection();
-  state.carriagePosition = selection.focusOffset; // задаем текущее положение каретки
+  state.carriagePosition = selection.focusOffset; // set carriage current position
+
+  const currentValue = state.editedvalue;
   const values = value.replace(/[^\d:]/g, "").split(":");
 
   if (
@@ -401,23 +408,24 @@ function updateTimerHandler(value, element) {
   ) {
     element.textContent = state.editedvalue;
   } else {
-    element.textContent = values.join(":");
-    state.editedvalue = element.textContent; // Обновляем в state значение таймера задачи
+    // element.textContent = values.join(":");
+    state.editedvalue = element.textContent; // update state edited value
   }
+
   setCarriagePosition(currentValue, state.editedvalue, element.childNodes[0]);
 }
 
-// Задаем расположение каретки
+// Update carriage position
 function setCarriagePosition(value, nextValue, element) {
-  // Если значение поля в итоге не поменялось, но что-то нажато было, смещаем каретку согласно правилам:
-  // backspace и пробел - без изменений, delete - вперёд, всё остальное - возвращаем каретку на 1 назад
+  // If no changes but smth is pressed then use the following logic:
+  // backspace and space - no changes, delete - move forward, other - move back
   if (value === nextValue) {
     switch (state.keyCode) {
       case 46: // delete
         state.carriagePosition++;
         break;
       case 8: // backspace
-      case 32: // пробел
+      case 32: // space
         break;
       default:
         state.carriagePosition--;
@@ -485,11 +493,6 @@ function validateCurrentVersion() {
     localStorage.setItem(versionStorageKey, version);
     localStorage.setItem(infoMessageStorageKey, 0);
   }
-}
-
-function loadSettings() {
-  const hideAside = localStorage.getItem(asideHideStorageKey) === "1";
-  asideHideCheckbox.checked = Number(hideAside);
 }
 
 function setTheme() {
