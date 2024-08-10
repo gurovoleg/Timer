@@ -195,7 +195,6 @@
 }
 
 .block-separator {
-	color: var(--border-color);
 	text-align: center;
 	margin: 0 10px;
 
@@ -204,6 +203,7 @@
 		height: 6px;
 		border-radius: 50%;
 		background-color: var(--border-color);
+		background-color: var(--font-color);
 
 		&:first-child {
 			margin-bottom: 10px;

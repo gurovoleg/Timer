@@ -24,6 +24,7 @@ const clearStorageButton = document.getElementById("clearStorage");
 const modalWrapper = document.getElementById("modal-wrapper");
 const modalCloseButton = document.getElementById("modal-close");
 const modalCheckbox = document.getElementById("modal-checkbox");
+const timerBlockSeparators = document.querySelectorAll(".block-separator");
 
 const disabled = "disabled";
 const showAside = "aside--show";
@@ -225,6 +226,10 @@ function startTimer(ms = 1000) {
   state.timer.start = Date.now();
   state.timer.add = convertToMilliseconds();
 
+  timerBlockSeparators.forEach((element) => {
+    element.classList.add("opacity-infinity");
+  });
+
   return setInterval(() => updateTimer(ms), ms);
 }
 
@@ -232,6 +237,11 @@ function stopTimer() {
   clearInterval(state.timer.id);
   state.controls.start = true;
   state.controls.stop = false;
+
+  timerBlockSeparators.forEach((element) => {
+    element.classList.remove("opacity-infinity");
+  });
+
   renderControls();
 }
 

@@ -62,7 +62,26 @@
   }
 }
 
+@keyframes opacity {
+  from {
+    opacity: 0;
+  }
 
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.opacity-infinity {
+  animation-name: opacity;
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
   
 @keyframes flipInX {
   from {
