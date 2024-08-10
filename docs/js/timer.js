@@ -327,7 +327,7 @@ function createCardElement(date, title, value) {
     state.editedvalue = value; // add current value to state to return it if input is invalid
 
     if (this.children.length === 2) {
-      this.insertAdjacentHTML("beforeend", "<span>...</span>");
+      // this.insertAdjacentHTML("beforeend", "<span>...</span>");
     }
     const timeElement = this.firstElementChild;
     timeElement.classList.add("edit-mode");
@@ -364,6 +364,7 @@ function createCardElement(date, title, value) {
       init();
     } else {
       this.classList.remove("edit-mode");
+      this.contentEditable = false;
     }
   });
 
@@ -383,6 +384,7 @@ function blurHandler(element, title) {
   if (task.time === newValue) {
     element.textContent = task.time;
     element.classList.remove("edit-mode");
+    element.contentEditable = false;
 
     return;
   }
