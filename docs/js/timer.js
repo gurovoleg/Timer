@@ -382,6 +382,7 @@ function blurHandler(element, title) {
 
   if (task.time === newValue) {
     element.textContent = task.time;
+    element.classList.remove("edit-mode");
 
     return;
   }
