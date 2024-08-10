@@ -52,6 +52,7 @@ const state = {
     show: false,
     compact: false,
     tasks: [],
+    shouldScrollToLatest: false,
   },
   filter: {
     search: "",
@@ -132,14 +133,14 @@ function renderAside(update = true) {
   if (update) {
     asideContent.innerHTML = "";
 
-    const data = state.aside.tasks.filter(({ name, date }) => {
+    const tasks = state.aside.tasks.filter(({ name, date }) => {
       return (
         name.includes(state.filter.search) || date.includes(state.filter.search)
       );
     });
 
-    for (let item of data) {
-      asideContent.append(createCardElement(item.date, item.name, item.time));
+    for (let task of tasks) {
+      asideContent.append(createCardElement(task.date, task.name, task.time));
     }
   }
 
@@ -159,6 +160,15 @@ function renderAside(update = true) {
       asideWrapper.classList.remove("d-none");
       compactAside.classList.remove("icon--rotate");
     }
+
+    if (state.aside.shouldScrollToLatest) {
+      asideContent.scrollTo({
+        top: asideContent.scrollHeight,
+        behavior: "smooth",
+      });
+
+      state.aside.shouldScrollToLatest = false;
+    }
   }, 100);
 }
 
@@ -167,6 +177,7 @@ function renderTimer() {
   let timer = getTimerValue();
   document.title = timer;
   timer = timer.replace(/:/g, "");
+
   timerElements.forEach((el, idx) => {
     el.innerHTML = timer[idx];
   });
@@ -226,6 +237,7 @@ function startTimer(ms = 1000) {
   state.timer.start = Date.now();
   state.timer.add = convertToMilliseconds();
 
+  // add blinking effect
   timerBlockSeparators.forEach((element) => {
     element.classList.add("opacity-infinity");
   });
@@ -238,6 +250,7 @@ function stopTimer() {
   state.controls.start = true;
   state.controls.stop = false;
 
+  // remove blinking effect
   timerBlockSeparators.forEach((element) => {
     element.classList.remove("opacity-infinity");
   });
@@ -250,11 +263,53 @@ function resetTimer() {
   renderTimer();
 }
 
+function resetActiveTaskStyles() {
+  const card = document.querySelector(".card--active");
+
+  if (card) {
+    card.classList.remove("card--active");
+  }
+}
+
+function launchTask(value, title, souldLaunchTimer = false) {
+  resetActiveTaskStyles();
+
+  const timer = value.split(":").map((str) => Number(str));
+  state.timer = {
+    ...state.timer,
+    h: timer[0],
+    m: timer[1],
+    s: timer[2],
+  };
+  state.taskName = title;
+
+  this.classList.add("card--active");
+
+  stopTimer();
+  renderTimer();
+
+  if (souldLaunchTimer) {
+    state.timer.id = startTimer();
+    state.controls.start = false;
+    state.controls.stop = true;
+
+    renderControls();
+  }
+
+  document.querySelector(".main").classList.add("flipInX");
+
+  setTimeout(() => {
+    document.querySelector(".main").classList.remove("flipInX");
+  }, 700);
+}
+
 function createCardElement(date, title, value) {
   title = title || "Unknown";
 
+  const isActiveCard = state.taskName === title;
+
   const card = document.createElement("div");
-  card.className = "card";
+  card.className = isActiveCard ? "card card--active" : "card";
   card.title = "Drag'n drop to sort";
 
   const rest = `
@@ -263,7 +318,7 @@ function createCardElement(date, title, value) {
       <path
         d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
     </svg>
-		<div class="card-icons">
+		<div class="card-icons" title="Start task">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
         stroke-linecap="round" stroke-linejoin="round" class="icon-stopwatch">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -314,26 +369,17 @@ function createCardElement(date, title, value) {
     }, 700);
   });
 
+  const bindedLaunchTask = launchTask.bind(card, value, title);
+
   const playIcon = card.querySelector(".icon-play");
+  playIcon.addEventListener("click", (e) => {
+    e.stopPropagation();
+    bindedLaunchTask(true);
+  });
 
-  playIcon.addEventListener("click", function () {
-    const timer = value.split(":").map((str) => Number(str));
-    state.timer = {
-      ...state.timer,
-      h: timer[0],
-      m: timer[1],
-      s: timer[2],
-    };
-    state.taskName = title;
-
-    stopTimer();
-    renderTimer();
-
-    document.querySelector(".main").classList.add("flipInX");
-
-    setTimeout(() => {
-      document.querySelector(".main").classList.remove("flipInX");
-    }, 700);
+  card.addEventListener("click", (e) => {
+    e.stopPropagation();
+    bindedLaunchTask();
   });
 
   // time edit handler
@@ -564,6 +610,7 @@ startButton.addEventListener("click", function () {
   state.timer.id = startTimer();
   state.controls.start = false;
   state.controls.stop = true;
+
   renderControls();
 });
 
@@ -617,9 +664,12 @@ submitButton.addEventListener("click", function (e) {
       time: getTimerValue(),
       date: new Date().toLocaleString("ru"),
     });
+
+    state.aside.shouldScrollToLatest = true;
   }
 
   localStorage.setItem(storageKey, JSON.stringify(state.aside.tasks));
+
   init();
 });
 

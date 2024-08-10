@@ -292,9 +292,13 @@
 		transition: all 0.4s ease;
 	}
 
-	.icon-close:hover {
-		fill: var(--font-color);
-		/* opacity: 0.5; */
+	.icon-close {
+		transition: fill 0.4s ease, transform 0.4s ease;
+
+		&:hover {
+			fill: var(--font-color);
+			transform: scale(1.2);
+		}
 	}
 
 	.icon-stopwatch, .icon-play {
@@ -308,6 +312,16 @@
 		position: absolute;
 		left: 15px;
 		transform: scale(0);
+	}
+}
+
+.card--active {
+	border: 3px solid var(--primary-color);
+	padding: 13px 18px 13px 9px;
+
+	.icon-close {
+		right: 6px;
+		top: 6px;
 	}
 }
 
