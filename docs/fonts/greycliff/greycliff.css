@@ -4,6 +4,7 @@
         url('GreycliffCF-Heavy.woff2') format('woff2');
     font-weight: 900;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -12,14 +13,7 @@
         url('GreycliffCF-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
-}
-
-@font-face {
-    font-family: 'Greycliff CF';
-    src: local('Greycliff CF'), local('GreycliffCF-Regular'),
-        url('GreycliffCF-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
+    font-display: swap;
 }
 
 

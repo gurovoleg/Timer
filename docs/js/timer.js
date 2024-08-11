@@ -5,6 +5,8 @@ const versionStorageKey = "app_version";
 const themeStorageKey = "theme";
 const asideHideStorageKey = "aside_settings_hide";
 
+const loader = document.getElementById("loader");
+const container = document.getElementById("container");
 const timerBlock = document.getElementById("timer-wrapper");
 const timerElement = document.getElementById("timer");
 const timerElements = document.querySelectorAll(".block-element");
@@ -75,6 +77,9 @@ async function init() {
 
   state.aside.tasks = fixedStorage;
   state.aside.show = fixedStorage.length > 0;
+
+  loader.classList.add("d-none");
+  container.classList.remove("d-none");
 
   render();
 }
@@ -577,16 +582,12 @@ function setTheme() {
 }
 
 // eventListeners
-document.addEventListener(
-  "DOMContentLoaded",
-  function () {
-    validateCurrentVersion();
-    renderInfoMessage();
-    setTheme();
-    init();
-  },
-  false
-);
+document.addEventListener("DOMContentLoaded", function () {
+  validateCurrentVersion();
+  renderInfoMessage();
+  setTheme();
+  init();
+});
 
 themeToggleButton.addEventListener("click", function () {
   const html = document.documentElement;

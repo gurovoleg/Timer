@@ -6,7 +6,10 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no, maximum-scale=1.0" />
 	<title>Time Tracker</title>
 
-	<link rel="stylesheet" href="./fonts/greycliff/stylesheet.css">
+	<link rel="preload" href="./fonts/greycliff/GreycliffCF-Heavy.woff2" as="font" type="font/woff2" crossorigin />
+	<link rel="preload" href="./fonts/greycliff/GreycliffCF-Medium.woff2" as="font" type="font/woff2" crossorigin />
+
+	<link rel="stylesheet" href="./fonts/greycliff/greycliff.css">
 	<link rel="stylesheet" href="./styles/animation.css">
 	<link rel="stylesheet" href="./styles/style.css">
 
@@ -15,8 +18,11 @@
 </head>
 
 <body>
+
+	<div id="loader" class="loader loader--absolute"></div>
+
 	<div id="theme-toggle-button" class="theme-toggle-button">
-		<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-sun">
+		<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="icon-sun d-none">
 			<path stroke="none" d="M0 0h24v24H0z" fill="none" />
 			<path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
 			<path
@@ -79,7 +85,7 @@
 		</div>
 	</div>
 
-	<div class="container">
+	<div id="container" class="container d-none">
 		<div class="header">
 			<span>RESPECT</span>
 			<span>YOUR</span>

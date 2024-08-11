@@ -28,7 +28,8 @@
 
 	> span {
 		font-family: var(--font-secondary);
-		color: var(--font-color);    }
+		color: var(--font-color);    
+	}
 
 	span:nth-child(2) {
 		color: var(--primary-color);
