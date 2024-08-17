@@ -125,8 +125,58 @@
 	width: 380px;
 }
 
-/* timer */
+/* settings */
+.settings-wrapper {
+	width: 100%;
 
+	.settings-title {
+		font-size: 20px;
+		font-weight: 700;
+		margin-bottom: 30px;
+		color: var(--font-color);
+
+		text-align: center;
+	}
+
+	.settings-item {
+		margin-bottom: 15px;
+		color: var(--font-color);
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.settings-icon {
+		width: 30px;
+		height: 30px;
+		transition: all 0.3s;
+		position: absolute;
+		cursor: pointer;
+	}
+
+	.settings-icon-close {
+		top: 25px;
+		left: 25px;
+		stroke: var(--font-color);
+		
+		&:hover {
+			stroke: var(--primary-color);
+		}
+	}
+
+	.settings-icon-complete {
+		top: 25px;
+		right: 25px;
+		fill: var(--font-color);
+		
+		&:hover {
+			fill: var(--secondary-color);
+		}
+	}
+}
+
+/* timer */
 .timer-wrapper {
 	position: relative;
 	border: 1px solid var(--border-color);
@@ -138,6 +188,24 @@
 	transform-style: preserve-3d;
     overflow: hidden;
 	transition: all 0.1s ease;
+
+	.icon-settings {
+		position: absolute;
+		top: 25px;
+		right: 25px;
+		color: var(--font-color);
+		cursor: pointer;
+		transition: all 0.3s ease;
+
+		> svg {
+			width: 30px;
+			height: 30px;
+		}
+
+		&:hover {
+			color: var(--secondary-color);
+		}
+	}
 }
 
 .timer-wrapper::before {
@@ -354,6 +422,7 @@
 		font-weight: bold;
 		font-size: 13px;
 		margin-bottom: 4px;
+		letter-spacing: 0.5px;
 	}
 
 	.description {
@@ -368,6 +437,7 @@
 		align-items: center;
 		color: var(--secondary-color);
 		font-size: 16px;
+		letter-spacing: 0.5px;
 	
 		> span {
 			display: inline-block;

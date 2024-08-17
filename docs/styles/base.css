@@ -33,6 +33,12 @@ input, textarea {
 	}
 }
 
+.input-label {
+	font-size: 12px;
+	margin-bottom: 5px;
+	margin-left: 3px;
+}
+
 textarea {
 	line-height: 1.4;
 	resize: vertical;
@@ -48,6 +54,7 @@ textarea {
 
     input {
         width: auto;
+		height: auto;
     }
 }
 
@@ -86,6 +93,7 @@ textarea {
     height: 18px;
     width: 18px;
     fill: var(--border-color);
+	transition: all 0.3s;
 }
 
 .icon--absolute {

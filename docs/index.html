@@ -55,25 +55,23 @@
 					d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-6.489 5.8a1 1 0 0 0 -1.218 1.567l1.292 1.293l-1.292 1.293l-.083 .094a1 1 0 0 0 1.497 1.32l1.293 -1.292l1.293 1.292l.094 .083a1 1 0 0 0 1.32 -1.497l-1.292 -1.293l1.292 -1.293l.083 -.094a1 1 0 0 0 -1.497 -1.32l-1.293 1.292l-1.293 -1.292l-.094 -.083z" />
 			</svg>
 
-			<div class="modal-title">Release 3.0</div>
+			<div class="modal-title">Release 3.1</div>
 			<div class="modal-content">
 				<div class="modal-content-header">
 					New functions
 				</div>
 
 				<ul>
-					<li>Added ability to edit card task name</li>
-					<li>Added ability to sort cards (drag'n drop)</li>
-					<li>Added dark theme</li>
+					<li>Added settings</li>
 				</ul>
 
-				<!-- <div class="modal-content-header">
+				<div class="modal-content-header">
 					Update
 				</div>
 
 				<ul>
-					<li>Edit time on double click event</li>
-				</ul> -->
+					<li>Updated styles</li>
+				</ul>
 			</div>
 
 			<div class="modal-footer">
@@ -95,67 +93,130 @@
 
 		<div class="main">
 			<div id="timer-wrapper" class="timer-wrapper">
+				<!-- Timer -->
+				<div id="section-timer">
+					<div id="timer-settings-toggle" class="icon-settings">
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+							stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+							<path d="M14 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+							<path d="M4 6l8 0" />
+							<path d="M16 6l4 0" />
+							<path d="M8 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+							<path d="M4 12l2 0" />
+							<path d="M10 12l10 0" />
+							<path d="M17 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+							<path d="M4 18l11 0" />
+							<path d="M19 18l1 0" />
+						</svg>
+					</div>
 
-				<div class="timer">
-					<div class="timer-value">
-						<div class="timer-value-block">
-							<div class="block-element">0</div>
-							<div class="block-element">0</div>
-							<div class="block-separator">
-								<div></div>
-								<div></div>
+					<div class="timer">
+						<div class="timer-value">
+							<div class="timer-value-block">
+								<div class="block-element">0</div>
+								<div class="block-element">0</div>
+								<div class="block-separator">
+									<div></div>
+									<div></div>
+								</div>
+							</div>
+							<div class="timer-value-block">
+								<div class="block-element">0</div>
+								<div class="block-element">0</div>
+								<div class="block-separator">
+									<div></div>
+									<div></div>
+								</div>
+							</div>
+							<div class="timer-value-block">
+								<div class="block-element">0</div>
+								<div class="block-element">0</div>
 							</div>
 						</div>
-						<div class="timer-value-block">
-							<div class="block-element">0</div>
-							<div class="block-element">0</div>
-							<div class="block-separator">
-								<div></div>
-								<div></div>
+					</div>
+
+					<div class="timer-controls">
+						<div id="start" class="button button-start">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path
+									d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
+							</svg>
+						</div>
+						<div id="stop" class="button button-stop">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path
+									d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
+								<path
+									d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
+							</svg>
+						</div>
+						<div id="reset" class="button button-reset">
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path
+									d="M11.247 3.341l-7 8c-.565 .647 -.106 1.659 .753 1.659h14c.86 0 1.318 -1.012 .753 -1.659l-7 -8a1 1 0 0 0 -1.506 0z" />
+								<path
+									d="M18 15h-12a2 2 0 0 0 -2 2v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2z" />
+							</svg>
+						</div>
+					</div>
+
+					<form id="form">
+						<div class="form-wrapper">
+							<textarea id="formInput" rows="2" placeholder="Task description..."></textarea>
+
+							<div id="submit" class="button disabled">
+								Save
 							</div>
 						</div>
-						<div class="timer-value-block">
-							<div class="block-element">0</div>
-							<div class="block-element">0</div>
-						</div>
-					</div>
+					</form>
 				</div>
 
-				<div class="timer-controls">
-					<div id="start" class="button button-start">
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path
-								d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
-						</svg>
+				<!-- Settings -->
+				<div id="section-settings" class="settings-wrapper d-none">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+						stroke-linecap="round" stroke-linejoin="round" class="settings-icon settings-icon-close"
+						id="settings-icon-close">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path d="M13 15l-3 -3l3 -3" />
+						<path d="M21 12a9 9 0 1 0 -18 0a9 9 0 0 0 18 0z" />
+					</svg>
+
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"
+						class="settings-icon settings-icon-complete" id="settings-icon-complete">
+						<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+						<path
+							d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" />
+					</svg>
+
+					<div class="settings-title">Settings</div>
+
+					<!-- <div class="settings-item">
+						<div class="input-label">Task prefix</div>
+						<input type="text" data-settings="taskPrefix"
+							placeholder="Enter name which will be used as a task prefix">
+					</div> -->
+
+					<div class="settings-item">
+						<label class="checkbox">
+							<input type="checkbox" data-settings="transformationAnimation">
+							<div>Enable transformation animation</div>
+						</label>
 					</div>
-					<div id="stop" class="button button-stop">
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path d="M9 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
-							<path d="M17 4h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h2a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2z" />
-						</svg>
-					</div>
-					<div id="reset" class="button button-reset">
-						<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-							<path stroke="none" d="M0 0h24v24H0z" fill="none" />
-							<path
-								d="M11.247 3.341l-7 8c-.565 .647 -.106 1.659 .753 1.659h14c.86 0 1.318 -1.012 .753 -1.659l-7 -8a1 1 0 0 0 -1.506 0z" />
-							<path d="M18 15h-12a2 2 0 0 0 -2 2v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2a2 2 0 0 0 -2 -2z" />
-						</svg>
+
+					<div class="settings-item">
+						<label class="checkbox">
+							<input type="checkbox" data-settings="highlightAnimation">
+							<div>Enable highlight animation</div>
+						</label>
 					</div>
 				</div>
-
-				<form id="form">
-					<div class="form-wrapper">
-						<textarea id="formInput" rows="2" placeholder="Task description..."></textarea>
-
-						<div id="submit" class="button disabled">
-							Save
-						</div>
-					</div>
-				</form>
 			</div>
+
+
 		</div>
 
 		<div id="aside" class="aside">

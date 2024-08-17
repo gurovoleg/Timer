@@ -1,9 +1,16 @@
-const version = "3.0";
+const version = "3.1";
 const storageKey = "timer";
 const infoMessageStorageKey = "showInfoMessage";
 const versionStorageKey = "app_version";
 const themeStorageKey = "theme";
 const asideHideStorageKey = "aside_settings_hide";
+const settingsStorageKey = "settings";
+
+const settingsSection = document.getElementById("section-settings");
+const timerSection = document.getElementById("section-timer");
+const settingsToggle = document.getElementById("timer-settings-toggle");
+const settingsCloseIcon = document.getElementById("settings-icon-close");
+const settingsCompleteIcon = document.getElementById("settings-icon-complete");
 
 const loader = document.getElementById("loader");
 const container = document.getElementById("container");
@@ -30,7 +37,6 @@ const timerBlockSeparators = document.querySelectorAll(".block-separator");
 
 const disabled = "disabled";
 const showAside = "aside--show";
-const addMockData = false;
 
 Sortable.create(asideContent, {
   group: "aside-items",
@@ -64,12 +70,12 @@ const state = {
   carriagePosition: 0,
   keyCode: undefined,
   enableTimerBlockTransformation: true,
-};
 
-if (addMockData) {
-  const data = generateMockData();
-  setMockData(data);
-}
+  settings: {
+    transformationAnimation: true,
+    highlightAnimation: true,
+  },
+};
 
 async function init() {
   const storage = await getStorage();
@@ -81,6 +87,7 @@ async function init() {
   loader.classList.add("d-none");
   container.classList.remove("d-none");
 
+  setValuesFromSettingsToDOMElements();
   render();
 }
 
@@ -103,6 +110,23 @@ function fixStorageToArray(storage) {
   }
 
   return storage;
+}
+
+function setValuesFromSettingsToDOMElements() {
+  if (Object.values(state.settings)?.length === 0) {
+    return;
+  }
+
+  // set values from settings to ui elements
+  for (let [name, value] of Object.entries(state.settings)) {
+    const control = document.querySelector(`[data-settings="${name}"]`);
+
+    if (control) {
+      const valueName = control.type === "checkbox" ? "checked" : "value";
+
+      control[valueName] = value;
+    }
+  }
 }
 
 // render global
@@ -301,11 +325,7 @@ function launchTask(value, title, souldLaunchTimer = false) {
     renderControls();
   }
 
-  document.querySelector(".main").classList.add("flipInX");
-
-  setTimeout(() => {
-    document.querySelector(".main").classList.remove("flipInX");
-  }, 700);
+  flipTimerBlock();
 }
 
 function createCardElement(date, title, value) {
@@ -395,9 +415,6 @@ function createCardElement(date, title, value) {
 
     state.editedvalue = value; // add current value to state to return it if input is invalid
 
-    if (this.children.length === 2) {
-      // this.insertAdjacentHTML("beforeend", "<span>...</span>");
-    }
     const timeElement = this.firstElementChild;
     timeElement.classList.add("edit-mode");
     timeElement.contentEditable = true;
@@ -581,11 +598,33 @@ function setTheme() {
   }
 }
 
+function loadSettings() {
+  try {
+    const settings = localStorage.getItem(settingsStorageKey);
+
+    if (settings) {
+      const parsedSettings = JSON.parse(settings);
+      state.settings = { ...state.settings, ...parsedSettings };
+    }
+  } catch (error) {
+    console.error("Error while loading settings", error);
+  }
+}
+
+function flipTimerBlock() {
+  document.querySelector(".main").classList.add("flipInX");
+
+  setTimeout(() => {
+    document.querySelector(".main").classList.remove("flipInX");
+  }, 700);
+}
+
 // eventListeners
 document.addEventListener("DOMContentLoaded", function () {
   validateCurrentVersion();
   renderInfoMessage();
   setTheme();
+  loadSettings();
   init();
 });
 
@@ -661,7 +700,7 @@ submitButton.addEventListener("click", function (e) {
     existsTask.date = new Date().toLocaleString("ru");
   } else {
     state.aside.tasks.push({
-      name: addInput.value.trim(),
+      name,
       time: getTimerValue(),
       date: new Date().toLocaleString("ru"),
     });
@@ -695,41 +734,82 @@ modalCheckbox.addEventListener("change", function (event) {
 
 // timer block animation
 function resetTimerBlockAnimationStyles() {
-  if (!state.enableTimerBlockTransformation) {
-    return;
-  }
-
   timerBlock.style.transform = "rotateX(0deg) rotateY(0deg)";
   // timerBlock.style.setProperty("--highlight-x", "50%"); // left
   // timerBlock.style.setProperty("--highlight-y", "100%"); // top
 }
 
 function updateTimerBlockAnimationStyles(e) {
-  if (!state.enableTimerBlockTransformation) {
-    return;
-  }
-
-  const { width, height, left, top } = timerBlock.getBoundingClientRect();
-  const centerX = left + width / 2;
-  const centerY = top + height / 2;
   const mouseX = e.clientX;
   const mouseY = e.clientY;
-
-  const distX = (mouseX - centerX) / (width / 2);
-  const distY = (mouseY - centerY) / (height / 2);
-
-  const rotateX = distY * 3; // Change to adjust rotation intensity
-  const rotateY = distX * -3; // Change to adjust rotation intensity
-
-  this.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  const { width, height, left, top } = timerBlock.getBoundingClientRect();
 
   // Move the highlight
-  const highlightX = ((mouseX - left) / width) * 100;
-  const highlightY = ((mouseY - top) / height) * 100;
+  if (state.settings.highlightAnimation) {
+    const highlightX = ((mouseX - left) / width) * 100;
+    const highlightY = ((mouseY - top) / height) * 100;
 
-  this.style.setProperty("--highlight-x", `${highlightX}%`);
-  this.style.setProperty("--highlight-y", `${highlightY}%`);
+    this.style.setProperty("--highlight-x", `${highlightX}%`);
+    this.style.setProperty("--highlight-y", `${highlightY}%`);
+  }
+
+  // Set transormation
+  if (
+    state.settings.transformationAnimation &&
+    state.enableTimerBlockTransformation
+  ) {
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+
+    const distX = (mouseX - centerX) / (width / 2);
+    const distY = (mouseY - centerY) / (height / 2);
+
+    const rotateX = distY * 3; // Change to adjust rotation intensity
+    const rotateY = distX * -3; // Change to adjust rotation intensity
+
+    this.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  }
 }
 
 timerBlock.addEventListener("mousemove", updateTimerBlockAnimationStyles);
 timerBlock.addEventListener("mouseleave", resetTimerBlockAnimationStyles);
+
+// settings
+settingsToggle.addEventListener("click", function () {
+  settingsSection.classList.remove("d-none");
+  timerSection.classList.add("d-none");
+
+  flipTimerBlock();
+});
+
+settingsCloseIcon.addEventListener("click", function () {
+  settingsSection.classList.add("d-none");
+  timerSection.classList.remove("d-none");
+
+  flipTimerBlock();
+});
+
+settingsCompleteIcon.addEventListener("click", function () {
+  const settingsControls = Array.from(
+    document.querySelectorAll("[data-settings]")
+  );
+
+  const settingsValues = settingsControls.reduce((result, control) => {
+    const { dataset, type } = control;
+    const value = control[type === "checkbox" ? "checked" : "value"];
+    const name = dataset.settings;
+
+    return { ...result, [name]: value };
+  }, {});
+
+  if (typeof settingsValues === "object") {
+    localStorage.setItem(settingsStorageKey, JSON.stringify(settingsValues));
+    state.settings = { ...state.settings, ...settingsValues };
+  }
+
+  settingsSection.classList.add("d-none");
+  timerSection.classList.remove("d-none");
+
+  resetTimerBlockAnimationStyles();
+  flipTimerBlock();
+});
